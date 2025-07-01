@@ -1,0 +1,24 @@
+.person-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  max-width: 100%;
+  flex-wrap: nowrap;
+
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+  }
+}
+
+.person-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+img {
+  object-fit: contain;
+  max-width: 100%;
+  border-radius: 50% 50%;
+}
+

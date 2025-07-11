@@ -1,0 +1,13 @@
+{
+  "name": "www-queerintech-org",
+  "compatibility_date": "2025-06-21",
+  "routes": [
+    {
+      "pattern": "test.queerintech.org",
+      "custom_domain": true,
+    },
+  ],
+  "assets": {
+    "directory": "./dist"
+  },
+}

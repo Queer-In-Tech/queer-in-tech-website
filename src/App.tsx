@@ -5,7 +5,7 @@ import './App.css'
 // Import page components
 import Home from './pages/Home'
 import AboutUs from './pages/AboutUs'
-import FindUs from './pages/FindUs'
+import Events from './pages/Events.tsx'
 import Gallery from './pages/Gallery'
 
 function App() {
@@ -27,6 +27,7 @@ function App() {
       <nav className="navbar">
         <div className="navbar-container">
           <div className="navbar-logo">
+            <img className={"logo"} src={"QIT-logo.jpg"} alt={"logo"}/>
             <Link to="/" onClick={closeMenu}>Queer in Tech</Link>
           </div>
 
@@ -44,7 +45,7 @@ function App() {
               <Link to="/about-us" className="navbar-link" onClick={closeMenu}>About Us</Link>
             </li>
             <li className="navbar-item">
-              <Link to="/find-us" className="navbar-link" onClick={closeMenu}>Find Us</Link>
+              <Link to="/events" className="navbar-link" onClick={closeMenu}>Events</Link>
             </li>
             <li className="navbar-item">
               <Link to="/gallery" className="navbar-link" onClick={closeMenu}>Gallery</Link>
@@ -57,7 +58,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/find-us" element={<FindUs />} />
+          <Route path="/events" element={<Events />} />
           <Route path="/gallery" element={<Gallery />} />
         </Routes>
       </div>

@@ -15,10 +15,25 @@ Open up `./public/{yourname.jpg}` and replace that image.
 You can add your images to the folder `./public/gallery-images`.
 To get them appearing on the gallery page you need to go to `Gallery.tsx`, and add your image names to the `imagePaths` array.
 
+#### Compress your images!
+Please compress the images so they load in quickly. 
+
+<details>
+<summary>To do this quickly on mac</summary>
+  
+  Open your folder in finder with the images in and highlight them all, then right click, go to quick actions and press convert image. 
+  In here, select jpeg and then image size medium.
+
+<img width="448" height="223" alt="Screenshot 2025-09-01 at 22 07 35" src="https://github.com/user-attachments/assets/b209af97-3e94-4f2c-b951-9d8097085d11" />
+
+</details>
+
+#### Rename your images
 I've renamed mine to be gallery-image-{index} to make things easier. Feel free to do the same. 
 
 <details>
 <summary>To do this quickly on mac</summary>
+  
   Open your folder in finder with the images in and highlight them all, then right click and press rename. 
   Select Format, then set custom format to 'gallery-image-' and start numbers at, continuing from where they left off in that folder.
   

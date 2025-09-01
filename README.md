@@ -1,69 +1,27 @@
-# React + TypeScript + Vite
+# Queer in tech website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The website is written in typescript with React. 
 
-Currently, two official plugins are available:
+## Running the app
+To run the app, open it up and run:
+`npm i`
+`npm run dev`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Adding your content
+### Changing your about us picture
+Open up `./public/{yourname.jpg}` and replace that image.
 
-## Expanding the ESLint configuration
+### Adding gallery images
+You can add your images to the folder `./public/gallery-images`.
+To get them appearing on the gallery page you need to go to `Gallery.tsx`, and add your image names to the `imagePaths` array.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+I've renamed mine to be gallery-image-{index} to make things easier. Feel free to do the same. 
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+<details>
+<summary>To do this quickly on mac</summary>
+  Open your folder in finder with the images in and highlight them all, then right click and press rename. 
+  Select Format, then set custom format to 'gallery-image-' and start numbers at, continuing from where they left off in that folder.
+  
+  <img width="513" height="168" alt="Screenshot 2025-09-01 at 21 50 43" src="https://github.com/user-attachments/assets/222460e2-9bd9-4191-9df7-5c0e62f8178c" />
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+</details>

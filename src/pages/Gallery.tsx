@@ -1,10 +1,18 @@
 import { type Photo, RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
 import { useEffect, useState } from "react";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 export default function Gallery() {
     const [photos, setPhotos] = useState<Photo[]>([]);
     const [loading, setLoading] = useState(true);
+    const [index, setIndex] = useState(-1);
 
     useEffect(() => {
         const loadImages = async () => {
@@ -85,6 +93,14 @@ export default function Gallery() {
     }
 
     return <div className="gallery-page">
-        <RowsPhotoAlbum photos={photos} />
+        <RowsPhotoAlbum photos={photos} targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
+
+        <Lightbox
+            slides={photos}
+            open={index >= 0}
+            index={index}
+            close={() => setIndex(-1)}
+            plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+        />
     </div>;
 }

@@ -3,30 +3,41 @@
   font-size: 2.5em;
 }
 
+/* Layout for the people grid */
 .person-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 2rem;
   max-width: 100%;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 
   @media screen and (max-width: 450px) {
     flex-direction: column;
+    align-items: center;
   }
 }
 
+/* Individual card + name */
 .person-card {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   padding: 1em;
   font-weight: bold;
   font-size: 1.2em;
 
+  /* Avatar image — force a square and clip to a perfect circle */
   img {
-    object-fit: contain;
-    max-width: 80%;
-    align-self: center;
-    border-radius: 50% 50%;
+    /* Pick a responsive size; both width & height are equal */
+    --avatar-size: clamp(160px, 24vw, 260px);
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+
+    border-radius: 50%;
+    object-fit: cover; /* fill the circle without distortion */
+    display: block;
   }
 }
 
@@ -38,5 +49,11 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-}
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
 
+  h3 {
+    text-align: center;
+  }
+}

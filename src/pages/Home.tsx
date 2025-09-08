@@ -53,7 +53,7 @@ const Home: React.FC = () => {
 
 const PersonCard = (props: Person) => {
     return (
-        <a href={props.linkedin} className={"person-card"}>
+        <a href={props.linkedin} target={"_blank"} className={"person-card"}>
             <img src={props.image} alt={props.name}/>
             {props.name}
         </a>

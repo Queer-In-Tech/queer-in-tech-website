@@ -36,12 +36,29 @@
   color: #646cff;
 }
 
+.link-font {
+  color: white;
+}
+
+.donate {
+  background-color: white;
+  border-radius: 15px;
+  height: 60px !important;
+  margin-left: 20px;
+}
+
+.donate-text {
+  color: black;
+  font-weight: 700;
+}
+
 .navbar-menu {
   display: flex;
   list-style: none;
   text-align: center;
   margin: 0;
   padding: 0;
+  align-items: center;
 }
 
 .navbar-item {

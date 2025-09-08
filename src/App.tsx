@@ -40,10 +40,13 @@ function App() {
                             <Link to="/" className="navbar-link" onClick={closeMenu}>Home</Link>
                         </li>
                         <li className="navbar-item">
-                            <Link to="https://donate.stripe.com/00waEQ4AL0tHgxU72W0x200">Donate</Link>
+                            <Link to="/gallery" className="navbar-link" onClick={closeMenu}>Gallery</Link>
                         </li>
                         <li className="navbar-item">
-                            <Link to="/gallery" className="navbar-link" onClick={closeMenu}>Gallery</Link>
+                            <Link className={"link-font"} to="https://docs.google.com/forms/d/e/1FAIpQLSdVoRtw-MLWAVgtTPYfieDUf9esvGc6LNTrGxr-xcTJyK5bFA/viewform?usp=header" >Feedback</Link>
+                        </li>
+                        <li className="navbar-item donate">
+                            <Link className={"donate-text"} to="https://donate.stripe.com/00waEQ4AL0tHgxU72W0x200">Donate</Link>
                         </li>
                     </ul>
                 </div>

@@ -3,7 +3,7 @@
   "compatibility_date": "2025-06-21",
   "routes": [
     {
-      "pattern": "test.queerintech.org",
+      "pattern": "queerintech.org",
       "custom_domain": true,
     },
   ],

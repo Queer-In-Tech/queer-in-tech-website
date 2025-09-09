@@ -12,7 +12,7 @@
   max-width: 100%;
   flex-wrap: wrap;
 
-  @media screen and (max-width: 450px) {
+  @media screen and (max-width: 480px) {
     flex-direction: column;
     align-items: center;
   }
@@ -27,7 +27,7 @@
   padding: 1em;
   font-weight: bold;
   font-size: 1.2em;
-  color: white;
+  color: black;
 
   /* Avatar image — force a square and clip to a perfect circle */
   img {
@@ -40,6 +40,10 @@
     object-fit: cover; /* fill the circle without distortion */
     display: block;
   }
+}
+
+.person-card.dark {
+  color: white;
 }
 
 .icon {

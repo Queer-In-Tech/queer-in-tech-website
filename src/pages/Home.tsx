@@ -37,15 +37,15 @@ const Home: React.FC = () => {
         </div>
             <h2>Meet the team</h2>
             <div className={"person-container"}>
-                <PersonCard name={"Dmitry"} image={"./dmitry.jpeg"}/>
-                <PersonCard name={"Stevie"} image={"./stevie.jpeg"}/>
-                <PersonCard name={"Jenni"} image={"./jenni.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Dmitry"} image={"./dmitry.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Stevie"} image={"./stevie.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Jenni"} image={"./jenni.jpeg"}/>
             </div>
             <div className={"person-container"}>
-                <PersonCard name={"Rebecca"} image={"./rebecca.jpeg"}/>
-                <PersonCard name={"Joe"} image={"./joe.jpeg"}/>
-                <PersonCard name={"Ari"} image={"./ari.jpeg"}/>
-                <PersonCard name={"Alex"} image={"./alex.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Rebecca"} image={"./rebecca.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Joe"} image={"./joe.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Ari"} image={"./ari.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Alex"} image={"./alex.jpeg"}/>
             </div>
     </div>
   );
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
 
 const PersonCard = (props: Person) => {
     return (
-        <a href={props.linkedin} target={"_blank"} className={"person-card"}>
+        <a href={props.linkedin} target={"_blank"} className={`person-card${props.isDarkMode ? ' dark' : ''}`}>
             <img src={props.image} alt={props.name}/>
             {props.name}
         </a>
@@ -64,6 +64,7 @@ interface Person {
     name: string,
     image: string,
     linkedin?: string,
+    isDarkMode?: boolean
 }
 
 export default Home;

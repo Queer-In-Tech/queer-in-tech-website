@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
-import './App.css'
+import './App.scss'
 
 // Import page components
 import Home from './pages/Home'
@@ -43,10 +43,10 @@ function App() {
                             <Link to="/gallery" className="navbar-link" onClick={closeMenu}>Gallery</Link>
                         </li>
                         <li className="navbar-item">
-                            <Link className={"link-font"} target={"_blank"} to="https://docs.google.com/forms/d/e/1FAIpQLSdVoRtw-MLWAVgtTPYfieDUf9esvGc6LNTrGxr-xcTJyK5bFA/viewform?usp=header" >Feedback</Link>
+                            <Link className={"navbar-link"} target={"_blank"} to="https://docs.google.com/forms/d/e/1FAIpQLSdVoRtw-MLWAVgtTPYfieDUf9esvGc6LNTrGxr-xcTJyK5bFA/viewform?usp=header" >Feedback</Link>
                         </li>
                         <li className="navbar-item donate">
-                            <Link className={"donate-text"} target={"_blank"} to="https://donate.stripe.com/00waEQ4AL0tHgxU72W0x200">Donate</Link>
+                            <Link className={"donate-text navbar-link"} target={"_blank"} to="https://donate.stripe.com/00waEQ4AL0tHgxU72W0x200">Donate</Link>
                         </li>
                     </ul>
                 </div>

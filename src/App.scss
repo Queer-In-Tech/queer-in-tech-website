@@ -45,10 +45,16 @@
   border-radius: 15px;
   height: 60px !important;
   margin-left: 20px;
+
+  @media screen and (max-width: 480px) {
+    margin: 10px 40px;
+    padding: 0 !important;
+    width: 80vw;
+  }
 }
 
 .donate-text {
-  color: black;
+  color: black !important;
   font-weight: 700;
 }
 
@@ -166,9 +172,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }

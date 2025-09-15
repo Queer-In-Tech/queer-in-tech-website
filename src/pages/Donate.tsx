@@ -22,7 +22,7 @@ const Donate: React.FC = () => {
             <div>Any donation you make helps us continue to organise events and provide a safe space for queer people working in tech. You can donate directly to our bank account (we will receive 100% of your donation), or through stripe (we receive most of your donation)</div>
             <div className={"donation-container"}>
                 <div className={"donate-section bank-deets"}>
-                    <div className={"left-align"}>Donate directly to our bank account:</div>
+                    <h3 className={"left-align"}>Donate directly to our bank account:</h3>
                     <div className={"left-align"}>Account name: Queer in Tech CIC</div>
                     <div className={"left-align"}>Account number: 60174652</div>
                     <div className={"left-align"}>Sort code: 82-12-08</div>

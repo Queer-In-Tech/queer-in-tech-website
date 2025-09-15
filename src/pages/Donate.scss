@@ -2,6 +2,11 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+
+   @media screen and (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .donate-section {

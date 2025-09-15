@@ -59,7 +59,7 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/gallery" element={<Gallery/>}/>
                     <Route path="/donate" element={<Donate/>}/>
-                    <Route path="/links" element={<PostEventLinks/>}/>
+                    <Route path="/links/latest" element={<PostEventLinks/>}/>
                 </Routes>
             </div>
         </>

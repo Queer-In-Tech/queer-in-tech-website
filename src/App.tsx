@@ -27,7 +27,7 @@ function App() {
             <nav className="navbar">
                 <div className="navbar-container">
                     <div className="navbar-logo">
-                        <img className={"logo"} src={"QIT-logo-1.jpg"} alt={"logo"}/>
+                        <img className={"logo"} src={"/QIT-logo-1.jpg"} alt={"logo"}/>
                         <Link to="/" onClick={closeMenu}>Queer in Tech</Link>
                     </div>
 

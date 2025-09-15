@@ -25,27 +25,27 @@ const Home: React.FC = () => {
             <div>
                 <h3>You can find our events over on meetup</h3>
                 <a href={"https://www.meetup.com/queer-in-tech-inclusive-tech-meetup"} target={"_blank"}><img className={"icon"}
-                                                                                                              src={"./meetup.png"}
+                                                                                                              src={"/meetup.png"}
                                                                                                               alt={"meetup link"}/></a>
             </div>
             <div>
                 <h3>Follow our linkedin page to get regular updates</h3>
                 <a href={"https://www.linkedin.com/company/queer-in-tech-uk"} target={"_blank"}><img className={"icon"}
-                                                                                                     src={isDarkMode ? "./linkedin-dark.png" : "./linkedin.png"}
+                                                                                                     src={isDarkMode ? "/linkedin-dark.png" : "/linkedin.png"}
                                                                                                      alt={"linkedin link"}/></a>
             </div>
         </div>
             <h2>Meet the team</h2>
             <div className={"person-container"}>
-                <PersonCard isDarkMode={isDarkMode} name={"Dmitry"} image={"./dmitry.jpeg"}/>
-                <PersonCard isDarkMode={isDarkMode} name={"Stevie"} image={"./stevie.jpeg"}/>
-                <PersonCard isDarkMode={isDarkMode} name={"Jenni"} image={"./jenni.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Dmitry"} image={"/dmitry.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Stevie"} image={"/stevie.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Jenni"} image={"/jenni.jpeg"}/>
             </div>
             <div className={"person-container"}>
-                <PersonCard isDarkMode={isDarkMode} name={"Rebecca"} image={"./rebecca.jpeg"}/>
-                <PersonCard isDarkMode={isDarkMode} name={"Joe"} image={"./joe.jpeg"}/>
-                <PersonCard isDarkMode={isDarkMode} name={"Ari"} image={"./ari.jpeg"}/>
-                <PersonCard isDarkMode={isDarkMode} name={"Alex"} image={"./alex.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Rebecca"} image={"/rebecca.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Joe"} image={"/joe.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Ari"} image={"/ari.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Alex"} image={"/alex.jpeg"}/>
             </div>
     </div>
   );

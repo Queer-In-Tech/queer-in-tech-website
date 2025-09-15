@@ -9,7 +9,7 @@
     {
       "pattern": "www.queerintech.org",
       "custom_domain": true
-    },
+    }
   ],
   "assets": {
     "directory": "./dist",

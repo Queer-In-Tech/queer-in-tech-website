@@ -5,6 +5,7 @@ import './App.scss'
 // Import page components
 import Home from './pages/Home'
 import Gallery from './pages/Gallery'
+import Donate from "./pages/Donate.tsx";
 import PostEventLinks from './pages/PostEventLinks'
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
                             <Link className={"navbar-link"} target={"_blank"} to="https://docs.google.com/forms/d/e/1FAIpQLSdVoRtw-MLWAVgtTPYfieDUf9esvGc6LNTrGxr-xcTJyK5bFA/viewform?usp=header" >Feedback</Link>
                         </li>
                         <li className="navbar-item donate">
-                            <Link className={"donate-text navbar-link"} target={"_blank"} to="https://donate.stripe.com/00waEQ4AL0tHgxU72W0x200">Donate</Link>
+                            <Link className={"donate-text navbar-link"} onClick={closeMenu} to="/donate">Donate</Link>
                         </li>
                     </ul>
                 </div>
@@ -57,6 +58,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/gallery" element={<Gallery/>}/>
+                    <Route path="/donate" element={<Donate/>}/>
                     <Route path="/links" element={<PostEventLinks/>}/>
                 </Routes>
             </div>

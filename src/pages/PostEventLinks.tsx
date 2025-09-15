@@ -114,13 +114,12 @@ function TalkLink({ title, speaker, links }: TalkLinkProps) {
 function TalkLinks() {
   const talks = [
     {
-      title: "Lessons from the Curve",
-      speaker: "Mark Crossfield (he/him)",
+      title: "Graphing Government Procurement",
+      speaker: "Maria Root (she/her)",
       links: [
-        { href: "https://markcrossfield.co.uk/", text: "Mark's Website" },
         {
-          href: "https://www.linkedin.com/in/markcrossfield",
-          text: "Mark's LinkedIn",
+          href: "https://www.linkedin.com/in/maria-root-70048451/",
+          text: "Maria's LinkedIn",
         },
       ],
     },
@@ -135,12 +134,13 @@ function TalkLinks() {
       ],
     },
     {
-      title: "Graphing Government Procurement",
-      speaker: "Maria Root (she/her)",
+      title: "Lessons from the Curve",
+      speaker: "Mark Crossfield (he/him)",
       links: [
+        { href: "https://markcrossfield.co.uk/", text: "Mark's Website" },
         {
-          href: "https://www.linkedin.com/in/maria-root-70048451/",
-          text: "Maria's LinkedIn",
+          href: "https://www.linkedin.com/in/markcrossfield",
+          text: "Mark's LinkedIn",
         },
       ],
     },

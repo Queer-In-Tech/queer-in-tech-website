@@ -6,6 +6,7 @@ import './App.scss'
 import Home from './pages/Home'
 import Gallery from './pages/Gallery'
 import Donate from "./pages/Donate.tsx";
+import PostEventLinks from './pages/PostEventLinks'
 
 function App() {
     const [isNavOpen, setIsNavOpen] = useState(false)
@@ -58,6 +59,7 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/gallery" element={<Gallery/>}/>
                     <Route path="/donate" element={<Donate/>}/>
+                    <Route path="/links" element={<PostEventLinks/>}/>
                 </Routes>
             </div>
         </>

@@ -1,0 +1,118 @@
+main {
+  max-width: 500px;
+  margin: auto;
+}
+
+.social-buttons {
+  display: inline-flex;
+}
+
+.social-button {
+  flex: 1;
+  height: 40px;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #242424;
+}
+
+.social-button-linkedin {
+  @extend .social-button;
+  background-color: #0a66c2;
+}
+
+.social-button-discord {
+  @extend .social-button;
+  background-color: #5865f2;
+}
+
+.social-button-meetup {
+  @extend .social-button;
+  background-color: #f64060;
+}
+
+.social-logo {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+}
+
+.action-button {
+  height: 40px;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  display: block;
+  position: relative;
+  background-color: white;
+  color: black;
+  border: 2px solid #242424;
+}
+
+.action-button:hover {
+  background-color: #f8f8ff;
+}
+
+.action-button svg {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.action-button-text {
+  display: block;
+  margin-left: 34px;
+  margin-top: 2.5%;
+  width: calc(100% - 34px);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.talk-links {
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  border: 2px solid #242424;
+}
+
+.talk-links-list {
+  list-style-type: none;
+  padding: 5px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: start;
+}
+
+.talk-link-text {
+  color: blue;
+}
+
+li {
+  padding: 0;
+  margin: 0px;
+  width: 100%;
+}
+
+h2 {
+  margin: 0;
+}
+
+h4 {
+  padding: 0;
+  margin: 0;
+}
+
+h5 {
+  padding: 0;
+  margin: 0;
+  font-style: italic;
+}

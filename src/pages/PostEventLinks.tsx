@@ -69,7 +69,7 @@ function ActionButtons() {
   return (
     <section className="action-buttons">
       <ActionButton
-        href="https://donate.stripe.com/00waEQ4AL0tHgxU72W0x200"
+        href="https://queerintech.org/donate"
         icon={<DonateIcon />}
         text="Donate to Queer in Tech"
       />
@@ -83,9 +83,8 @@ function ActionButtons() {
         icon={<IdeaIcon />}
         text="Got an idea for a talk or venue?"
       />
-      {/* todo: add link for next event when made on meetup */}
       <ActionButton
-        href=""
+        href="https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/events/310956620/"
         icon={<NextEventIcon />}
         text="RSVP to our next event in January"
       />
@@ -96,6 +95,7 @@ function ActionButtons() {
 function TalkLink({ title, speaker, links }: TalkLinkProps) {
   return (
     <li className="talk-link">
+      <hr />
       <h4>{title}</h4>
       <h5>{speaker}</h5>
       <ul className="talk-links-list">
@@ -107,7 +107,6 @@ function TalkLink({ title, speaker, links }: TalkLinkProps) {
           </li>
         ))}
       </ul>
-      <hr />
     </li>
   );
 }
@@ -136,7 +135,7 @@ function TalkLinks() {
       ],
     },
     {
-      title: "TODO: Talk title goes here",
+      title: "Graphing Government Procurement",
       speaker: "Maria Root (she/her)",
       links: [
         {

@@ -4,11 +4,15 @@
   "routes": [
     {
       "pattern": "queerintech.org",
-      "custom_domain": true,
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.queerintech.org",
+      "custom_domain": true
     },
   ],
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"
-  },
+  }
 }

@@ -23,9 +23,9 @@ const Donate: React.FC = () => {
             <div className={"donation-container"}>
                 <div className={"donate-section bank-deets"}>
                     <div className={"left-align"}>Donate directly to our bank account:</div>
-                    <div className={"left-align"}>Account name - Queer in Tech</div>
-                    <div className={"left-align"}>Account number:</div>
-                    <div className={"left-align"}>Sort code:</div>
+                    <div className={"left-align"}>Account name: Queer in Tech CIC</div>
+                    <div className={"left-align"}>Account number: 60174652</div>
+                    <div className={"left-align"}>Sort code: 82-12-08</div>
                 </div>
                 <div className={"donate-section stripe"}>
                     <a className={`stripe-button${isDarkMode ? ' dark' : ''}`} href={"https://donate.stripe.com/00waEQ4AL0tHgxU72W0x200"}>Donate on stripe</a>

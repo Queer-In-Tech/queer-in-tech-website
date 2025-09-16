@@ -142,6 +142,7 @@ function TalkLinks() {
           href: "https://www.linkedin.com/in/markcrossfield",
           text: "Mark's LinkedIn",
         },
+{href: "https://www.markcrossfield.co.uk/it-takes-a-village", text: "Links from the slides"},
       ],
     },
   ];

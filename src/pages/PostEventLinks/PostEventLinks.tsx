@@ -4,7 +4,6 @@ export default function PostEventLinks() {
   return (
     <main>
       <h1 hidden>Post Event Links</h1>
-      <h2>Manchester Tech Fest</h2>
       <p>
         An inclusive, safe space for LGBTQ+ people and allies working in tech.
       </p>

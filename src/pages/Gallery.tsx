@@ -77,7 +77,8 @@ export default function Gallery() {
                 "/gallery-images/dmitri-gallery-image-23.jpeg",
                 "/gallery-images/dmitri-gallery-image-24.jpeg",
                 "/gallery-images/dmitri-gallery-image-25.jpeg",
-                "/gallery-images/dmitri-gallery-image-26.jpeg"
+                "/gallery-images/dmitri-gallery-image-26.jpeg",
+                "/gallery-images/gallery-image-30.jpeg"
                 // Add more image paths as needed
             ];
 

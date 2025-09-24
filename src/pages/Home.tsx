@@ -37,15 +37,15 @@ const Home: React.FC = () => {
         </div>
             <h2>Meet the team</h2>
             <div className={"person-container"}>
-                <PersonCard isDarkMode={isDarkMode} name={"Dmitry"} image={"/dmitry.jpeg"}/>
-                <PersonCard isDarkMode={isDarkMode} name={"Stevie"} image={"/stevie.jpeg"}/>
-                <PersonCard isDarkMode={isDarkMode} name={"Jenni"} image={"/jenni.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Dmitry"} image={"/dmitry.jpeg"} linkedin='https://www.linkedin.com/in/dmitry-leyko-ba800715a/'/>
+                <PersonCard isDarkMode={isDarkMode} name={"Stevie"} image={"/stevie.jpeg"} linkedin='https://www.linkedin.com/in/stevie-woods-a7806456/'/>
+                <PersonCard isDarkMode={isDarkMode} name={"Jenni"} image={"/jenni.jpeg"} linkedin='https://www.linkedin.com/in/fosterjenni/'/>
             </div>
             <div className={"person-container"}>
-                <PersonCard isDarkMode={isDarkMode} name={"Rebecca"} image={"/rebecca.jpeg"}/>
-                <PersonCard isDarkMode={isDarkMode} name={"Joe"} image={"/joe.jpeg"}/>
-                <PersonCard isDarkMode={isDarkMode} name={"Ari"} image={"/ari.jpeg"}/>
-                <PersonCard isDarkMode={isDarkMode} name={"Alex"} image={"/alex.jpeg"}/>
+                <PersonCard isDarkMode={isDarkMode} name={"Rebecca"} image={"/rebecca.jpeg"} linkedin='https://www.linkedin.com/in/therebeccafox/'/>
+                <PersonCard isDarkMode={isDarkMode} name={"Joe"} image={"/joe.jpeg"} linkedin='https://www.linkedin.com/in/twofirstnames/'/>
+                <PersonCard isDarkMode={isDarkMode} name={"Ari"} image={"/ari.jpeg"} linkedin='https://www.linkedin.com/in/ari-abendstern/'/>
+                <PersonCard isDarkMode={isDarkMode} name={"Alex"} image={"/alex.jpeg"} linkedin='https://www.linkedin.com/in/alejandro-norniella-roza-513077138/'/>
             </div>
     </div>
   );

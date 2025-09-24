@@ -18,6 +18,14 @@ main {
   justify-content: center;
 }
 
+.social-button:hover {
+      filter: brightness(0.9);
+    }
+
+.social-button:active {
+      filter: brightness(0.4);
+    }
+
 .social-button-linkedin {
   @extend .social-button;
   background-color: #0a66c2;
@@ -54,6 +62,11 @@ main {
 .action-button:hover {
   background-color: #f8f8ff;
 }
+
+.action-button:active {
+      filter: brightness(0.4);
+    }
+
 
 .action-button svg {
   position: absolute;

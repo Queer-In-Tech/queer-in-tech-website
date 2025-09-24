@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
 import Donate from "./pages/Donate.tsx";
 import PostEventLinks from "./pages/PostEventLinks/PostEventLinks.tsx";
+import Contact from "./pages/Contact.tsx";
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -62,6 +63,16 @@ function App() {
                 Feedback
               </Link>
             </li>
+            {/* New Contact link placed just before Donate */}
+            <li className="navbar-item">
+              <Link
+                className="navbar-link"
+                onClick={closeMenu}
+                to="/contact"
+              >
+                Contact
+              </Link>
+            </li>
             <li className="navbar-item donate">
               <Link
                 className={"donate-text navbar-link"}
@@ -79,6 +90,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/donate" element={<Donate />} />
           <Route path="/links/latest" element={<PostEventLinks />} />
         </Routes>

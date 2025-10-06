@@ -54,15 +54,6 @@ function App() {
                 Gallery
               </Link>
             </li>
-            <li className="navbar-item">
-              <Link
-                className={"navbar-link"}
-                target={"_blank"}
-                to="https://docs.google.com/forms/d/e/1FAIpQLSdVoRtw-MLWAVgtTPYfieDUf9esvGc6LNTrGxr-xcTJyK5bFA/viewform?usp=header"
-              >
-                Feedback
-              </Link>
-            </li>
             {/* New Contact link placed just before Donate */}
             <li className="navbar-item">
               <Link

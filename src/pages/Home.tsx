@@ -19,7 +19,7 @@ const Home: React.FC = () => {
   return (
     <div className="home-page">
             <h2 className={"title"}>Queer in Tech</h2>
-            <div>Queer in Tech (QiT) is an inclusive community for LGBTQ+ professionals and allies in Manchester and beyond. Established in 2023, we create open, safe spaces where people can share experiences, connect, and showcase exciting work in tech. Since launching, we’ve grown to 600+ members, run quarterly events with talks, networking, and socials, and secured support from leading tech companies. Our mission is to empower queer voices in tech, increase representation in leadership, and expand to new UK hubs, ensuring everyone can thrive by being their authentic self.
+            <div>Queer in Tech (QiT) is an inclusive community for LGBTQ+ professionals and allies with chapters in Manchester and Leeds. Established in 2023, we create open, safe spaces where people can share experiences, connect, and showcase exciting work in tech. Since launching, we’ve grown to 600+ members, run quarterly events with talks, networking, and socials, and secured support from leading tech companies. Our mission is to empower queer voices in tech, increase representation in leadership, and expand to new UK hubs, ensuring everyone can thrive by being their authentic self.
             </div>
         <div className="find-us">
             <div>

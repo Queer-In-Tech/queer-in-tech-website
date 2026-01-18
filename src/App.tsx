@@ -6,7 +6,8 @@ import "./App.scss";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
 import Donate from "./pages/Donate.tsx";
-import PostEventLinks from "./pages/PostEventLinks/PostEventLinks.tsx";
+import PostEventLinksManchester from "./pages/PostEventLinks/PostEventLinksManchester.tsx";
+import PostEventLinksLeeds from "./pages/PostEventLinks/PostEventLinksLeeds.tsx";
 import Contact from "./pages/Contact.tsx";
 
 function App() {
@@ -83,7 +84,12 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/donate" element={<Donate />} />
-          <Route path="/links/latest" element={<PostEventLinks />} />
+          <Route path="/links/latest" element={<PostEventLinksManchester />} />
+          <Route
+            path="/links/manchester"
+            element={<PostEventLinksManchester />}
+          />
+          <Route path="/links/leeds" element={<PostEventLinksLeeds />} />
         </Routes>
       </div>
     </>

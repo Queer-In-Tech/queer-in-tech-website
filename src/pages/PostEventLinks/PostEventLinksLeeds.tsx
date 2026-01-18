@@ -1,9 +1,9 @@
 import "./PostEventLinks.scss";
 
-export default function PostEventLinks() {
+export default function PostEventLinksLeeds() {
   return (
     <main>
-      <h1 hidden>Post Event Links</h1>
+      <h1>Leeds Event Links</h1>
       <p>
         An inclusive, safe space for LGBTQ+ people and allies working in tech.
       </p>
@@ -33,15 +33,13 @@ function SocialButtons() {
         />
       </a>
 
-      {/* Discord button that can be included when it becomes relevant (add href): */}
-
-      {/* <a className="social-button-discord" href="" target="_blank">
-          <img
-            src={./discord-white.png"}
-            alt={"Discord Logo"}
-            className="social-logo"
-          />
-        </a> */}
+      <a className="social-button-discord" href="https://discord.gg/VWMjhfHX" target="_blank">
+        <img
+          src={"/discord-white.png"}
+          alt={"Discord Logo"}
+          className="social-logo"
+        />
+      </a>
       <a
         className="social-button-meetup"
         href="https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/"
@@ -75,9 +73,9 @@ function ActionButtons() {
   return (
     <section className="action-buttons">
       <ActionButton
-        href="https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/events/310956620/"
+        href="https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/events/312885279/"
         icon={<NextEventIcon />}
-        text="RSVP to our next event in January"
+        text="RSVP to our next event in March"
       />
       <ActionButton
         href="https://docs.google.com/forms/d/e/1FAIpQLScimSVEnwGHRtH8r5E5XKt9dBtUMhXhFLXsjTTS5m-2cD57Rg/viewform?usp=header"

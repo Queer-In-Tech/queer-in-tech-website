@@ -3,19 +3,70 @@
   font-size: 2.5em;
 }
 
-/* Layout for the people grid */
-.person-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 2rem;
-  max-width: 100%;
-  flex-wrap: wrap;
+.team-section {
+  margin-top: 2.5rem;
+  padding: 2.5rem clamp(1.25rem, 3vw, 3rem);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-sizing: border-box;
+  overflow: hidden;
+}
 
-  @media screen and (max-width: 480px) {
-    flex-direction: column;
-    align-items: center;
+.contributors-section {
+  margin-top: 3rem;
+  padding: 2.5rem clamp(1.25rem, 3vw, 3rem);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.team-section h2,
+.contributors-section h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.team-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem;
+  margin-top: 1.5rem;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.team-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  h3 {
+    margin: 0;
+    text-align: center;
   }
+}
+
+/* Layout for the people grid */
+.person-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+  max-width: 100%;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 /* Individual card + name */
@@ -24,17 +75,20 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 1em;
+  padding: 0.75em;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: black;
+  text-decoration: none;
+  width: 100%;
+  max-width: 220px;
+  box-sizing: border-box;
 
   /* Avatar image — force a square and clip to a perfect circle */
   img {
-    /* Pick a responsive size; both width & height are equal */
-    --avatar-size: clamp(160px, 24vw, 260px);
-    width: var(--avatar-size);
-    height: var(--avatar-size);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
 
     border-radius: 50%;
     object-fit: cover; /* fill the circle without distortion */
@@ -44,6 +98,54 @@
 
 .person-card.dark {
   color: white;
+}
+
+.person-card.placeholder {
+  opacity: 0.7;
+  cursor: default;
+
+  img {
+    filter: grayscale(100%);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .team-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .team-section,
+  .contributors-section {
+    padding: 2rem 1.25rem;
+  }
+
+  .team-column {
+    padding: 1.25rem;
+  }
+
+  .person-grid {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+
+  .person-card {
+    font-size: 1em;
+    max-width: 180px;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .team-section,
+  .contributors-section {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .team-column {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
 }
 
 .icon {

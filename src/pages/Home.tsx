@@ -16,6 +16,25 @@ const Home: React.FC = () => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
+  const manchesterTeam: Person[] = [
+    { name: "Dmitry", image: "/dmitry.jpeg", linkedin: "https://www.linkedin.com/in/dmitry-leyko-ba800715a/" },
+    { name: "Jenni", image: "/jenni.jpeg", linkedin: "https://www.linkedin.com/in/fosterjenni/" },
+    { name: "Stevie", image: "/stevie.jpeg", linkedin: "https://www.linkedin.com/in/stevie-woods-a7806456/" },
+    { name: "Joe", image: "/joe.jpeg", linkedin: "https://www.linkedin.com/in/twofirstnames/" },
+    { name: "Ari", image: "/ari.jpeg", linkedin: "https://www.linkedin.com/in/ari-abendstern/" },
+  ];
+
+  const leedsTeam: Person[] = [
+    { name: "Loz", image: "/loz.jpeg", linkedin: "https://www.linkedin.com/in/loz-atkinson/" },
+    { name: "Alice", image: "/alice.jpeg"},
+  ];
+
+  const previousContributors: Person[] = [
+    { name: "Kaily", image: "/kaily.jpeg", linkedin: "https://www.linkedin.com/in/kailyisme/" },
+    { name: "Rebecca", image: "/rebecca.jpeg", linkedin: "https://www.linkedin.com/in/therebeccafox/" },
+    { name: "Alex", image: "/alex.jpeg", linkedin: "https://www.linkedin.com/in/alejandro-norniella-roza-513077138/" },
+  ];
+
   return (
     <div className="home-page">
             <h2 className={"title"}>Queer in Tech</h2>
@@ -35,35 +54,76 @@ const Home: React.FC = () => {
                                                                                                      alt={"linkedin link"}/></a>
             </div>
         </div>
-            <h2>Meet the team</h2>
-            <div className={"person-container"}>
-                <PersonCard isDarkMode={isDarkMode} name={"Dmitry"} image={"/dmitry.jpeg"} linkedin='https://www.linkedin.com/in/dmitry-leyko-ba800715a/'/>
-                <PersonCard isDarkMode={isDarkMode} name={"Stevie"} image={"/stevie.jpeg"} linkedin='https://www.linkedin.com/in/stevie-woods-a7806456/'/>
-                <PersonCard isDarkMode={isDarkMode} name={"Jenni"} image={"/jenni.jpeg"} linkedin='https://www.linkedin.com/in/fosterjenni/'/>
-            </div>
-            <div className={"person-container"}>
-                <PersonCard isDarkMode={isDarkMode} name={"Rebecca"} image={"/rebecca.jpeg"} linkedin='https://www.linkedin.com/in/therebeccafox/'/>
-                <PersonCard isDarkMode={isDarkMode} name={"Joe"} image={"/joe.jpeg"} linkedin='https://www.linkedin.com/in/twofirstnames/'/>
-                <PersonCard isDarkMode={isDarkMode} name={"Ari"} image={"/ari.jpeg"} linkedin='https://www.linkedin.com/in/ari-abendstern/'/>
-                <PersonCard isDarkMode={isDarkMode} name={"Alex"} image={"/alex.jpeg"} linkedin='https://www.linkedin.com/in/alejandro-norniella-roza-513077138/'/>
-            </div>
+            <section className="team-section">
+                <h2>Meet the team</h2>
+                <div className="team-columns">
+                    <div className="team-column">
+                        <h3>Manchester team</h3>
+                        <div className="person-grid">
+                            {manchesterTeam.map((person) => (
+                                <PersonCard key={person.name} isDarkMode={isDarkMode} {...person} />
+                            ))}
+                        </div>
+                    </div>
+                    <div className="team-column">
+                        <h3>Leeds team</h3>
+                        <div className="person-grid">
+                            {leedsTeam.map((person, index) => (
+                                <PersonCard
+                                    key={`leeds-${index}`}
+                                    isDarkMode={isDarkMode}
+                                    {...person}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="contributors-section">
+                <h2>Previous contributors</h2>
+                <div className="person-grid">
+                    {previousContributors.map((person, index) => (
+                        <PersonCard
+                            key={`previous-${index}`}
+                            isDarkMode={isDarkMode}
+                            {...person}
+                        />
+                    ))}
+                </div>
+            </section>
     </div>
   );
 };
 
 const PersonCard = (props: Person) => {
-    return (
-        <a href={props.linkedin} target={"_blank"} className={`person-card${props.isDarkMode ? ' dark' : ''}`}>
-            <img src={props.image} alt={props.name}/>
+    const className = `person-card${props.isDarkMode ? ' dark' : ''}${props.isPlaceholder ? ' placeholder' : ''}`;
+    const content = (
+        <>
+            <img src={props.image} alt={props.isPlaceholder ? "Placeholder profile" : props.name} />
             {props.name}
+        </>
+    );
+
+    if (props.linkedin) {
+    return (
+        <a href={props.linkedin} target={"_blank"} rel={"noreferrer"} className={className}>
+            {content}
         </a>
     )
+    }
+
+    return (
+        <div className={className}>
+            {content}
+        </div>
+    );
 }
 
 interface Person {
     name: string,
     image: string,
     linkedin?: string,
+    isPlaceholder?: boolean,
     isDarkMode?: boolean
 }
 

@@ -7,6 +7,7 @@ export default function PostEventLinks() {
       
       <SocialButtons />
       <ActionButtons />
+      <DiscordInvite />
     </main>
   );
 }
@@ -81,6 +82,46 @@ function ActionButtons() {
         icon={<IdeaIcon />}
         text=" Want to host and/or sponsor us?"
       />
+    </section>
+  );
+}
+
+function DiscordInvite() {
+  return (
+    <section className="discord-callout" aria-labelledby="discord-heading">
+      <div className="discord-callout-text">
+        <h2 id="discord-heading">Join our Discord</h2>
+        <p>
+          Keep the conversation going between events. Meet LGBTQ+ folks in tech,
+          ask questions, and share opportunities.
+        </p>
+        <a
+          className="discord-cta"
+          href="https://discord.gg/VWMjhfHX"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src="/discord-white.png"
+            alt=""
+            aria-hidden="true"
+            className="discord-cta-icon"
+          />
+          Join the QiT Discord
+        </a>
+      </div>
+      {/* Discord "Who's online" widget - re-enable once the community is larger. */}
+      {/* <iframe
+          className="discord-embed"
+          title="Queer in Tech Discord"
+          src="https://discord.com/widget?id=1404772211151343657&theme=dark"
+          width="380"
+          height="420"
+          allowTransparency={true}
+          frameBorder="0"
+          loading="lazy"
+          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+        ></iframe> */}
     </section>
   );
 }

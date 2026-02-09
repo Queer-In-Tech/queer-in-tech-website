@@ -73,7 +73,7 @@ function ActionButtons() {
   return (
     <section className="action-buttons">
       <ActionButton
-        href="https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/events/312885279/"
+        href="https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/events/313284437/"
         icon={<NextEventIcon />}
         text="RSVP to our next event in March"
       />

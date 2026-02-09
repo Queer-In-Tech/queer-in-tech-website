@@ -75,7 +75,7 @@ function ActionButtons() {
       <ActionButton
         href="https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/events/313284437/"
         icon={<NextEventIcon />}
-        text="RSVP to our next event in March"
+        text="RSVP to our next event in July"
       />
       <ActionButton
         href="https://docs.google.com/forms/d/e/1FAIpQLScimSVEnwGHRtH8r5E5XKt9dBtUMhXhFLXsjTTS5m-2cD57Rg/viewform?usp=header"

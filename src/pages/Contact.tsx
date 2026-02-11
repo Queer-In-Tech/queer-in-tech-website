@@ -110,7 +110,7 @@ function DiscordInvite() {
           Join the QiT Discord
         </a>
       </div>
-      {/* Discord "Who's online" widget - re-enable once the community is larger. */}
+      {/* Discord "Who's  online" widget - re-enable once the community is larger. */}
       {/* <iframe
           className="discord-embed"
           title="Queer in Tech Discord"

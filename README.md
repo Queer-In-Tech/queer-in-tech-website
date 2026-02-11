@@ -2,6 +2,16 @@
 
 The website is written in typescript with React. 
 
+## Branching strategy (required)
+`main` is a protected branch. **Do not push directly to `main`.**
+
+All code changes must go through a pull request into `main`:
+1. Start from latest `main`: `git checkout main && git pull origin main`
+2. Create a branch: `git checkout -b feature/short-description`
+3. Commit your changes on that branch
+4. Push branch: `git push -u origin feature/short-description`
+5. Open a PR: `feature/short-description` -> `main`
+
 ## Running the app
 To run the app, open it up and run:
 `npm i`

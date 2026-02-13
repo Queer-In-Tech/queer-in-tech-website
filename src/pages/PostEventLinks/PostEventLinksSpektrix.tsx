@@ -1,4 +1,10 @@
 import "./PostEventLinks.scss";
+import {
+  EVENT_LINKS,
+  FORM_LINKS,
+  SOCIAL_LINKS,
+  SPEKTRIX_TALK_LINKS,
+} from "../../constants/links";
 
 export default function PostEventLinks() {
   return (
@@ -17,7 +23,7 @@ function SocialButtons() {
     <section className="social-buttons">
       <a
         className="social-button-linkedin"
-        href="https://www.linkedin.com/company/queer-in-tech-uk"
+        href={SOCIAL_LINKS.linkedinOrg}
         target="_blank"
       >
         <img
@@ -38,7 +44,7 @@ function SocialButtons() {
         </a> */}
       <a
         className="social-button-meetup"
-        href="https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/"
+        href={SOCIAL_LINKS.meetupGroup}
         target="_blank"
       >
         <img
@@ -69,22 +75,22 @@ function ActionButtons() {
   return (
     <section className="action-buttons">
       <ActionButton
-        href="https://queerintech.org/donate"
+        href={SOCIAL_LINKS.donatePage}
         icon={<DonateIcon />}
         text="Donate to Queer in Tech"
       />
       <ActionButton
-        href="https://docs.google.com/forms/d/e/1FAIpQLSdVoRtw-MLWAVgtTPYfieDUf9esvGc6LNTrGxr-xcTJyK5bFA/viewform?usp=header"
+        href={FORM_LINKS.spektrixFeedback}
         icon={<FeedbackIcon />}
         text="Give us some quick feedback"
       />
       <ActionButton
-        href="mailto:hello@queerintech.org?subject=Talk%2FVenue%20Idea&body=Thanks%20for%20sharing%20your%20idea%20for%20a%20talk%20or%20venue!%20You%20can%20add%20more%20details%20below%20or%20just%20hit%20send%20and%20we'll%20reach%20out%20to%20you%20to%20discuss%20%3A)"
+        href={FORM_LINKS.spektrixTalkOrVenueIdeaEmail}
         icon={<IdeaIcon />}
         text="Got an idea for a talk or venue?"
       />
       <ActionButton
-        href="https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/events/310956620/"
+        href={EVENT_LINKS.spektrixNext}
         icon={<NextEventIcon />}
         text="RSVP to our next event in January"
       />
@@ -118,7 +124,7 @@ function TalkLinks() {
       speaker: "Maria Root (she/her)",
       links: [
         {
-          href: "https://www.linkedin.com/in/maria-root-70048451/",
+          href: SPEKTRIX_TALK_LINKS.mariaLinkedin,
           text: "Maria's LinkedIn",
         },
       ],
@@ -128,7 +134,7 @@ function TalkLinks() {
       speaker: "Fırat Gülmez (he/him)",
       links: [
         {
-          href: "https://www.linkedin.com/in/firatgulmez/",
+          href: SPEKTRIX_TALK_LINKS.firatLinkedin,
           text: "Fırat's LinkedIn",
         },
       ],
@@ -137,12 +143,12 @@ function TalkLinks() {
       title: "Lessons from the Curve",
       speaker: "Mark Crossfield (he/him)",
       links: [
-        { href: "https://markcrossfield.co.uk/", text: "Mark's Website" },
+        { href: SPEKTRIX_TALK_LINKS.markWebsite, text: "Mark's Website" },
         {
-          href: "https://www.linkedin.com/in/markcrossfield",
+          href: SPEKTRIX_TALK_LINKS.markLinkedin,
           text: "Mark's LinkedIn",
         },
-{href: "https://www.markcrossfield.co.uk/it-takes-a-village", text: "Mark's slides"},
+        { href: SPEKTRIX_TALK_LINKS.markSlides, text: "Mark's slides" },
       ],
     },
   ];

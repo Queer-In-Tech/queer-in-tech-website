@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Home.scss';
+import { SOCIAL_LINKS, TEAM_LINKS } from "../constants/links";
 
 const Home: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(
@@ -17,22 +18,22 @@ const Home: React.FC = () => {
   }, []);
 
   const manchesterTeam: Person[] = [
-    { name: "Dmitry", image: "/dmitry.jpeg", linkedin: "https://www.linkedin.com/in/dmitry-leyko-ba800715a/" },
-    { name: "Jenni", image: "/jenni.jpeg", linkedin: "https://www.linkedin.com/in/fosterjenni/" },
-    { name: "Stevie", image: "/stevie.jpeg", linkedin: "https://www.linkedin.com/in/stevie-woods-a7806456/" },
-    { name: "Joe", image: "/joe.jpeg", linkedin: "https://www.linkedin.com/in/twofirstnames/" },
-    { name: "Ari", image: "/ari.jpeg", linkedin: "https://www.linkedin.com/in/ari-abendstern/" },
+    { name: "Dmitry", image: "/dmitry.jpeg", linkedin: TEAM_LINKS.dmitry },
+    { name: "Jenni", image: "/jenni.jpeg", linkedin: TEAM_LINKS.jenni },
+    { name: "Stevie", image: "/stevie.jpeg", linkedin: TEAM_LINKS.stevie },
+    { name: "Joe", image: "/joe.jpeg", linkedin: TEAM_LINKS.joe },
+    { name: "Ari", image: "/ari.jpeg", linkedin: TEAM_LINKS.ari },
   ];
 
   const leedsTeam: Person[] = [
-    { name: "Loz", image: "/loz.jpeg", linkedin: "https://www.linkedin.com/in/loz-atkinson/" },
+    { name: "Loz", image: "/loz.jpeg", linkedin: TEAM_LINKS.loz },
     { name: "Alice", image: "/alice.jpeg"},
   ];
 
   const previousContributors: Person[] = [
-    { name: "Kaily", image: "/kaily.jpeg", linkedin: "https://www.linkedin.com/in/kailyisme/" },
-    { name: "Rebecca", image: "/rebecca.jpeg", linkedin: "https://www.linkedin.com/in/therebeccafox/" },
-    { name: "Alex", image: "/alex.jpeg", linkedin: "https://www.linkedin.com/in/alejandro-norniella-roza-513077138/" },
+    { name: "Kaily", image: "/kaily.jpeg", linkedin: TEAM_LINKS.kaily },
+    { name: "Rebecca", image: "/rebecca.jpeg", linkedin: TEAM_LINKS.rebecca },
+    { name: "Alex", image: "/alex.jpeg", linkedin: TEAM_LINKS.alex },
   ];
 
   return (
@@ -43,13 +44,13 @@ const Home: React.FC = () => {
         <div className="find-us">
             <div>
                 <h3>You can find our events over on meetup</h3>
-                <a href={"https://www.meetup.com/queer-in-tech-inclusive-tech-meetup"} target={"_blank"}><img className={"icon"}
+                <a href={SOCIAL_LINKS.meetupGroup} target={"_blank"}><img className={"icon"}
                                                                                                               src={"/meetup.png"}
                                                                                                               alt={"meetup link"}/></a>
             </div>
             <div>
                 <h3>Follow our linkedin page to get regular updates</h3>
-                <a href={"https://www.linkedin.com/company/queer-in-tech-uk"} target={"_blank"}><img className={"icon"}
+                <a href={SOCIAL_LINKS.linkedinOrg} target={"_blank"}><img className={"icon"}
                                                                                                      src={isDarkMode ? "/linkedin-dark.png" : "/linkedin.png"}
                                                                                                      alt={"linkedin link"}/></a>
             </div>

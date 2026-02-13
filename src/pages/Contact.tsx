@@ -1,5 +1,9 @@
 import "./Contact.scss";
-import { DISCORD_INVITE_URL } from "../constants/links";
+import {
+  DISCORD_INVITE_URL,
+  FORM_LINKS,
+  SOCIAL_LINKS,
+} from "../constants/links";
 
 export default function PostEventLinks() {
   return (
@@ -18,7 +22,7 @@ function SocialButtons() {
     <section className="social-buttons">
       <a
         className="social-button-linkedin"
-        href="https://www.linkedin.com/company/queer-in-tech-uk"
+        href={SOCIAL_LINKS.linkedinOrg}
         target="_blank"
       >
         <img
@@ -37,13 +41,13 @@ function SocialButtons() {
             />
         </a> */}
 
-      <a className="social-button-email" href="mailto:hello@queerintech.org" target="_blank">
+      <a className="social-button-email" href={SOCIAL_LINKS.email} target="_blank">
           <svg xmlns="http://www.w3.org/2000/svg"  width={40}  height={40}  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
           <p className="text-email">Email</p>
         </a>
       <a
         className="social-button-meetup"
-        href="https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/"
+        href={SOCIAL_LINKS.meetupGroup}
         target="_blank"
       >
         <img
@@ -74,12 +78,12 @@ function ActionButtons() {
   return (
     <section className="action-buttons">
       <ActionButton
-        href="https://docs.google.com/forms/d/e/1FAIpQLScimSVEnwGHRtH8r5E5XKt9dBtUMhXhFLXsjTTS5m-2cD57Rg/viewform?usp=header"
+        href={FORM_LINKS.talkIdea}
         icon={<IdeaIcon />}
         text="Got an idea for a talk?"
       />
       <ActionButton
-        href="https://docs.google.com/forms/d/e/1FAIpQLSeabY_aBXbaQeCtjaxyCAui85AXy7ryOJfmcX1WY0JPjg_Azw/viewform?usp=header"
+        href={FORM_LINKS.hostOrSponsor}
         icon={<IdeaIcon />}
         text=" Want to host and/or sponsor us?"
       />

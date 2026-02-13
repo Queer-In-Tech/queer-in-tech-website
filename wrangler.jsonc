@@ -14,5 +14,16 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"
+  },
+  "env": {
+    "dev": {
+      "name": "www-queerintech-org-dev",
+      "routes": [
+        {
+          "pattern": "test.queerintech.org",
+          "custom_domain": true
+        }
+      ]
+    }
   }
 }

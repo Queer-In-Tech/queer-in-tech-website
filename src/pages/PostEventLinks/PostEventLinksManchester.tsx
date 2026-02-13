@@ -1,4 +1,5 @@
 import "./PostEventLinks.scss";
+import { DISCORD_INVITE_URL } from "../../constants/links";
 
 export default function PostEventLinksManchester() {
   return (
@@ -33,7 +34,7 @@ function SocialButtons() {
         />
       </a>
 
-      <a className="social-button-discord" href="https://discord.gg/VWMjhfHX" target="_blank">
+      <a className="social-button-discord" href={DISCORD_INVITE_URL} target="_blank">
         <img
           src={"/discord-white.png"}
           alt={"Discord Logo"}

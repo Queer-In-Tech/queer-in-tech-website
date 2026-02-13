@@ -1,4 +1,5 @@
 import "./Contact.scss";
+import { DISCORD_INVITE_URL } from "../constants/links";
 
 export default function PostEventLinks() {
   return (
@@ -97,7 +98,7 @@ function DiscordInvite() {
         </p>
         <a
           className="discord-cta"
-          href="https://discord.gg/VWMjhfHX"
+          href={DISCORD_INVITE_URL}
           target="_blank"
           rel="noreferrer"
         >

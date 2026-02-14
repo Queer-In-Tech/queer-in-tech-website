@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Donate.scss';
+import { SOCIAL_LINKS } from "../constants/links";
 
 const Donate: React.FC = () => {
     const [isDarkMode, setIsDarkMode] = useState<boolean>(
@@ -28,7 +29,7 @@ const Donate: React.FC = () => {
                     <div className={"left-align"}>Sort code: 82-12-08</div>
                 </div>
                 <div className={"donate-section stripe"}>
-                    <a className={`stripe-button${isDarkMode ? ' dark' : ''}`} href={"https://donate.stripe.com/00waEQ4AL0tHgxU72W0x200"}>Donate on stripe</a>
+                    <a className={`stripe-button${isDarkMode ? ' dark' : ''}`} href={SOCIAL_LINKS.stripeDonate}>Donate on stripe</a>
                 </div>
             </div>
             <h2>Where does your money go?</h2>

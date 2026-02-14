@@ -9,6 +9,7 @@ import Donate from "./pages/Donate.tsx";
 import PostEventLinksManchester from "./pages/PostEventLinks/PostEventLinksManchester.tsx";
 import PostEventLinksLeeds from "./pages/PostEventLinks/PostEventLinksLeeds.tsx";
 import Contact from "./pages/Contact.tsx";
+import { ROUTES } from "./constants/routes";
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -30,7 +31,7 @@ function App() {
         <div className="navbar-container">
           <div className="navbar-logo">
             <img className={"logo"} src={"/QIT-logo-1.jpg"} alt={"logo"} />
-            <Link to="/" onClick={closeMenu}>
+            <Link to={ROUTES.home} onClick={closeMenu}>
               Queer in Tech
             </Link>
           </div>
@@ -46,12 +47,12 @@ function App() {
 
           <ul className={`navbar-menu ${isNavOpen ? "active" : ""}`}>
             <li className="navbar-item">
-              <Link to="/" className="navbar-link" onClick={closeMenu}>
+              <Link to={ROUTES.home} className="navbar-link" onClick={closeMenu}>
                 Home
               </Link>
             </li>
             <li className="navbar-item">
-              <Link to="/gallery" className="navbar-link" onClick={closeMenu}>
+              <Link to={ROUTES.gallery} className="navbar-link" onClick={closeMenu}>
                 Gallery
               </Link>
             </li>
@@ -60,7 +61,7 @@ function App() {
               <Link
                 className="navbar-link"
                 onClick={closeMenu}
-                to="/contact"
+                to={ROUTES.contact}
               >
                 Contact
               </Link>
@@ -69,7 +70,7 @@ function App() {
               <Link
                 className={"donate-text navbar-link"}
                 onClick={closeMenu}
-                to="/donate"
+                to={ROUTES.donate}
               >
                 Donate
               </Link>
@@ -80,16 +81,16 @@ function App() {
 
       <div className="content">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/donate" element={<Donate />} />
-          <Route path="/links/latest" element={<PostEventLinksManchester />} />
+          <Route path={ROUTES.home} element={<Home />} />
+          <Route path={ROUTES.gallery} element={<Gallery />} />
+          <Route path={ROUTES.contact} element={<Contact />} />
+          <Route path={ROUTES.donate} element={<Donate />} />
+          <Route path={ROUTES.linksLatest} element={<PostEventLinksManchester />} />
           <Route
-            path="/links/manchester"
+            path={ROUTES.linksManchester}
             element={<PostEventLinksManchester />}
           />
-          <Route path="/links/leeds" element={<PostEventLinksLeeds />} />
+          <Route path={ROUTES.linksLeeds} element={<PostEventLinksLeeds />} />
         </Routes>
       </div>
     </>

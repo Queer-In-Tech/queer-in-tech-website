@@ -1,0 +1,31 @@
+#gallery-page {
+    padding:2em;
+}
+
+#tabs-container {
+    display: flex;
+    flex-direction: row;
+    // gap: ;
+}
+
+#events-container {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+}
+
+.tab {
+    border: solid black;
+}
+
+.page-title {
+    text-align: left;
+    padding: 0;
+    margin: 1em 0;
+}
+
+.page-subtitle {
+    text-align: left;
+    padding: 0;
+    margin: 1em 0;
+}

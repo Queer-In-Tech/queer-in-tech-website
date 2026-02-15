@@ -4,12 +4,13 @@ import "./App.scss";
 
 // Import page components
 import Home from "./pages/Home";
-import Gallery from "./pages/Gallery";
 import Donate from "./pages/Donate.tsx";
 import PostEventLinksManchester from "./pages/PostEventLinks/PostEventLinksManchester.tsx";
 import PostEventLinksLeeds from "./pages/PostEventLinks/PostEventLinksLeeds.tsx";
 import Contact from "./pages/Contact.tsx";
 import { ROUTES } from "./constants/routes";
+import GalleryOverview from "./pages/gallery/GalleryOverview.tsx";
+import { GalleryEvent } from "./pages/gallery/Gallery.tsx";
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -82,7 +83,8 @@ function App() {
       <div className="content">
         <Routes>
           <Route path={ROUTES.home} element={<Home />} />
-          <Route path={ROUTES.gallery} element={<Gallery />} />
+          <Route path={ROUTES.gallery} element={<GalleryOverview />} />
+          <Route path={ROUTES.galleryEvent} element={<GalleryEvent />} />
           <Route path={ROUTES.contact} element={<Contact />} />
           <Route path={ROUTES.donate} element={<Donate />} />
           <Route path={ROUTES.linksLatest} element={<PostEventLinksManchester />} />

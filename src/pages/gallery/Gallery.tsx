@@ -8,23 +8,32 @@ import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
+import "./Gallery.scss"
+import { useLocation } from "react-router-dom";
+import { GALLERY_DATA } from "../../constants/gallery";
 
-export default function Gallery() {
+export const GalleryEvent = () => {
+    const location = useLocation();
+    const eventKey = location.pathname.split("/gallery/")[1];
     const [photos, setPhotos] = useState<Photo[]>([]);
     const [loading, setLoading] = useState(true);
     const [index, setIndex] = useState(-1);
 
+    const eventData = GALLERY_DATA.find(event => event.key === eventKey)
+
     useEffect(() => {
         const loadImages = async () => {
-            // Gallery assets live in public/gallery-images and follow gallery-image-N.jpeg naming.
-            const imageCount = 62; // Keep in sync with files in public/gallery-images
-            const imagePaths = Array.from({ length: imageCount }, (_, idx) =>
-                `/gallery-images/gallery-image-${idx + 1}.jpeg`
-            );
+            if (!eventData) {
+                console.error(`Event with key ${eventKey} not found in GALLERY_DATA`);
+                setLoading(false);
+                return;
+            }
+
+            // http://localhost:5173/gallery/Leeds-EventName2_2024-01-01
 
             const imagePromises: Promise<Photo>[] = [];
 
-            for (const imgPath of imagePaths) {
+            for (const imgPath of eventData.photos) {
                 // Create a promise to load each image and get its dimensions
                 const promise = new Promise<Photo>((resolve) => {
                     const img = new Image();
@@ -64,6 +73,7 @@ export default function Gallery() {
     }
 
     return <div className="gallery-page">
+        <div className="gallery-title">{eventData?.title}</div>
         <RowsPhotoAlbum photos={photos} targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
 
         <Lightbox

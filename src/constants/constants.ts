@@ -1,0 +1,1 @@
+export const CHAPTERS = ['Manchester', 'Leeds'] as const

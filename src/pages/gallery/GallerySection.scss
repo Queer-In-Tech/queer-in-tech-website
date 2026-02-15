@@ -1,0 +1,35 @@
+.gallery-section-container {
+    display: flex;
+    background-color: transparent;
+    flex-direction: column;
+}
+
+.gallery-section-images-container {
+    display: flex;
+    border: 1px solid black;
+    justify-content: space-between;
+}
+
+.gallery-section-small-images-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.gallery-section-small-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    padding: 0 16px
+}
+
+.gallery-section-large-image {
+    width: 175px;
+    height: 175px;
+    object-fit: cover;
+    padding: 16px
+}
+
+.gallery-section-title {
+    padding-top: 8px;
+}

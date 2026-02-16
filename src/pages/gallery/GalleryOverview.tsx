@@ -60,9 +60,9 @@ export default function GalleryOverview() {
                     All Chapters
                 </button>
                 {
-                    CHAPTERS.map((chapter) => {
+                    CHAPTERS.map((chapter, index) => {
                         return (
-                            <button onClick={() => selectChapter(chapter)}>
+                            <button className="tab" key={index} onClick={() => selectChapter(chapter)}>
                                 {chapter}
                             </button>
                         )
@@ -71,7 +71,9 @@ export default function GalleryOverview() {
             </div>
             <div id="events-container">
                 {
-                    filteredEvents.map((event, index) => {
+                    filteredEvents.sort((a: EventGallery, b: EventGallery) => {
+                        return b.date.getTime() - a.date.getTime();
+                    }).map((event, index) => {
                         return <GallerySection key={event.key} imageKey={event.key} eventTitle={event.title} allImages={event.photos} index={index} eventDate={event.date} />
                     })
                 }

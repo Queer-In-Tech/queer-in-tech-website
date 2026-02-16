@@ -2,6 +2,7 @@
     display: flex;
     background-color: transparent;
     flex-direction: column;
+    padding: 16px 0;
 }
 
 .gallery-section-images-container {
@@ -13,19 +14,19 @@
 .gallery-section-small-images-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .gallery-section-small-image {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    padding: 0 16px
+    padding: 8px 16px
 }
 
 .gallery-section-large-image {
-    width: 175px;
-    height: 175px;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
     padding: 16px
 }

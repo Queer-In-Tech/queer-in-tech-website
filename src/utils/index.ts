@@ -1,5 +1,4 @@
 export function loadImageWithDimensions(src: string): Promise<{ src: string; width: number; height: number }> {
-    console.log(src, '<<< src')
     return new Promise((resolve) => {
         const img = new window.Image();
         img.onload = () => {
@@ -17,6 +16,5 @@ export function loadImageWithDimensions(src: string): Promise<{ src: string; wid
             });
         };
         img.src = src;
-        console.log(img, '<<< image object')
     });
 }

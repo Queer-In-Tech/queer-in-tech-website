@@ -18,8 +18,6 @@ export const GallerySection = (props: GallerySectionProps) => {
         navigate(`/gallery/${props.imageKey}`)
     }
 
-    console.log(props.imageKey, '<<< gallery section key')
-
     return (
         <button className="gallery-section-container" onClick={navigateToGallery}>
             <div

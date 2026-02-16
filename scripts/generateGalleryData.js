@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const GALLERY_ROOT = path.join(__dirname, '../public/gallery-images-1');
+const GALLERY_ROOT = path.join(__dirname, '../public/gallery-images');
 const OUTPUT_FILE = path.join(__dirname, '../src/constants/gallery.ts');
 
 function getEvents(chapterDir, chapterName) {
@@ -15,7 +15,7 @@ function getEvents(chapterDir, chapterName) {
             const eventPath = path.join(chapterDir, eventFolder);
             const photos = fs.readdirSync(eventPath)
                 .filter(file => /\.(jpe?g|png|gif)$/i.test(file))
-                .map(file => `/gallery-images-1/${chapterName}/${eventFolder}/${file}`);
+                .map(file => `/gallery-images/${chapterName}/${eventFolder}/${file}`);
             // Extract event name and date from folder name
             const [title, date] = eventFolder.split('_');
             return {

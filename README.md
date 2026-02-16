@@ -46,33 +46,7 @@ You can either:
 Use `.jpeg` where possible to keep file sizes smaller.
 
 ### Adding gallery images
-1. Add images to `./public/gallery-images`.
-2. Name files as `gallery-image-N.jpeg` (for example `gallery-image-63.jpeg`).
-3. Keep numbering continuous from `1` (no gaps).
-4. Update `imageCount` in `src/pages/GalleryEvent.tsx` to match the total number of gallery images.
-
-#### Compress your images!
-Please compress images so they load quickly and the page stays fast.
-
-<details>
-<summary>To do this quickly on mac</summary>
-  
-  Open your folder in finder with the images in and highlight them all, then right click, go to quick actions and press convert image. 
-  In here, select jpeg and then image size medium.
-
-<img width="448" height="223" alt="Screenshot 2025-09-01 at 22 07 35" src="https://github.com/user-attachments/assets/b209af97-3e94-4f2c-b951-9d8097085d11" />
-
-</details>
-
-#### Rename your images
-Use `gallery-image-` as the base name and continue from the current highest number.
-
-<details>
-<summary>To do this quickly on mac</summary>
-  
-  Open your folder in finder with the images in and highlight them all, then right click and press rename. 
-  Select Format, then set custom format to 'gallery-image-' and start numbers at, continuing from where they left off in that folder.
-  
-  <img width="513" height="168" alt="Screenshot 2025-09-01 at 21 50 43" src="https://github.com/user-attachments/assets/222460e2-9bd9-4191-9df7-5c0e62f8178c" />
-
-</details>
+1. Find the correct folder under `./public/gallery-images/{chapter-name}/{event-name}_{event-date}`
+2. If it doesn't exist, create it in that user flow. 
+3. Run `npm run build` to populate the image data file. (alternatively, it's part of the deployment anyway, so you can just commit)
+4. Check your event and images appear on the gallery page (you may need to click into the gallery event page to see them)

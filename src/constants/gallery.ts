@@ -1,5 +1,22 @@
 export const GALLERY_DATA = [
     {
+        "key": "Leeds-Flutter_2026-02-10",
+        "chapter": "Leeds",
+        "title": "Flutter",
+        "date": "2026-02-10",
+        "photos": [
+            "/gallery-images/Leeds/Flutter_2026-02-10/1770763832518 Medium.jpeg",
+            "/gallery-images/Leeds/Flutter_2026-02-10/IMG_2924 Medium.jpeg",
+            "/gallery-images/Leeds/Flutter_2026-02-10/IMG_2929 Medium.jpeg",
+            "/gallery-images/Leeds/Flutter_2026-02-10/IMG_2947 Medium.jpeg",
+            "/gallery-images/Leeds/Flutter_2026-02-10/IMG_2961 Medium.jpeg",
+            "/gallery-images/Leeds/Flutter_2026-02-10/IMG_2971 Medium.jpeg",
+            "/gallery-images/Leeds/Flutter_2026-02-10/IMG_2977 Medium.jpeg",
+            "/gallery-images/Leeds/Flutter_2026-02-10/IMG_2982 Medium.jpeg",
+            "/gallery-images/Leeds/Flutter_2026-02-10/IMG_2990 Medium.jpeg"
+        ]
+    },
+    {
         "key": "Manchester-Accenture_2023_03_10",
         "chapter": "Manchester",
         "title": "Accenture",

@@ -49,7 +49,7 @@ Use `.jpeg` where possible to keep file sizes smaller.
 1. Add images to `./public/gallery-images`.
 2. Name files as `gallery-image-N.jpeg` (for example `gallery-image-63.jpeg`).
 3. Keep numbering continuous from `1` (no gaps).
-4. Update `imageCount` in `src/pages/Gallery.tsx` to match the total number of gallery images.
+4. Update `imageCount` in `src/pages/GalleryEvent.tsx` to match the total number of gallery images.
 
 #### Compress your images!
 Please compress images so they load quickly and the page stays fast.

@@ -8,7 +8,7 @@ import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
-import "./Gallery.scss"
+import "./GalleryEvent.scss"
 import { useLocation } from "react-router-dom";
 import { GALLERY_DATA } from "../../constants/gallery";
 

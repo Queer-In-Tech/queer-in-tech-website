@@ -16,7 +16,7 @@ interface EventGallery {
 
 
 export default function GalleryOverview() {
-    const [chapter, setChapter] = useState<string>('All Chapters')
+    const [, setChapter] = useState<string>('All Chapters')
     const [events, setEvents] = useState<EventGallery[]>([])
     const [filteredEvents, setFilteredEvents] = useState<EventGallery[]>([])
     const selectChapter = (newChapter: string) => {

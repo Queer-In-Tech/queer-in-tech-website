@@ -10,7 +10,7 @@ import PostEventLinksLeeds from "./pages/PostEventLinks/PostEventLinksLeeds.tsx"
 import Contact from "./pages/Contact.tsx";
 import { ROUTES } from "./constants/routes";
 import GalleryOverview from "./pages/gallery/GalleryOverview.tsx";
-import { GalleryEvent } from "./pages/gallery/Gallery.tsx";
+import { GalleryEvent } from "./pages/gallery/GalleryEvent.tsx";
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);

@@ -2,13 +2,15 @@
     display: flex;
     background-color: transparent;
     flex-direction: column;
-    padding: 16px 0;
+    margin: 16px 0;
+    padding: 5px;
 }
 
 .gallery-section-images-container {
     display: flex;
     border: 1px solid black;
-    justify-content: space-between;
+    justify-content: center;
+    min-width: 360px;
 }
 
 .gallery-section-small-images-container {

@@ -24,10 +24,12 @@ export const GallerySection = (props: GallerySectionProps) => {
                 className="gallery-section-images-container"
                 style={{flexDirection: displayDirection}}
             >
-                <div className="gallery-section-small-images-container">
-                    {props.allImages[1] ? <img className="gallery-section-small-image" src={props.allImages[1].src}/> : null}
-                    {props.allImages[2] ? <img className="gallery-section-small-image" src={props.allImages[2].src}/> : null}
-                </div>
+                {props.allImages.length > 1 ? <div className="gallery-section-small-images-container">
+                    {props.allImages[1] ?
+                        <img className="gallery-section-small-image" src={props.allImages[1].src}/> : null}
+                    {props.allImages[2] ?
+                        <img className="gallery-section-small-image" src={props.allImages[2].src}/> : null}
+                </div> : null}
                 <img className="gallery-section-large-image" src={props.allImages[0].src}/>
             </div>
             <div className="gallery-section-title">{props.eventTitle} - {props.eventDate.toLocaleDateString('default', {

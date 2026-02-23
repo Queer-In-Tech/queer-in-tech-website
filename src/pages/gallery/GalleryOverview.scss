@@ -5,7 +5,7 @@
 #tabs-container {
     display: flex;
     flex-direction: row;
-    // gap: ;
+    gap: 0.5em;
 }
 
 #events-container {
@@ -16,8 +16,33 @@
 }
 
 .tab {
-    border: solid black;
-    margin: 0 1em;
+    border: 1px solid #222;
+    margin: 0;
+    padding: 0.4em 0.8em;
+    background: transparent;
+    color: #cbc1ec;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+    font-size: 0.95rem;
+    line-height: 1;
+    /* align with other layout spacing */
+    margin-right: 0.5em;
+}
+
+.tab:hover {
+    background: rgba(0,0,0,0.04);
+}
+
+.tab:focus {
+    outline: 2px solid rgba(0,123,255,0.25);
+    outline-offset: 2px;
+}
+
+.tab.active {
+    background-color: #323e85; /* selected colour — adjust to your theme */
+    color: #fff;
+    border-color: #7353f8; /* if your preprocessor supports darken; otherwise keep explicit color */
 }
 
 .page-title {

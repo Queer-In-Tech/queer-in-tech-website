@@ -16,7 +16,7 @@ interface EventGallery {
 
 
 export default function GalleryOverview() {
-    const [, setChapter] = useState<string>('All Chapters')
+    const [selectedChapter, setChapter] = useState<string>('All Chapters')
     const [events, setEvents] = useState<EventGallery[]>([])
     const [filteredEvents, setFilteredEvents] = useState<EventGallery[]>([])
     const selectChapter = (newChapter: string) => {
@@ -54,15 +54,26 @@ export default function GalleryOverview() {
     return (
         <section id='gallery-page'>
             <h2 className="page-title">Past Events</h2>
-            <p className="page-subtitle">Lorem ipsum</p>
+            <p className="page-subtitle">You can find all the pictures from our previous events here</p>
             <div id="tabs-container">
-                <button className="tab" onClick={() => selectChapter('All Chapters')}>
+                <button
+                    type="button"
+                    className={`tab ${selectedChapter === 'All Chapters' ? 'active' : ''}`}
+                    onClick={() => selectChapter('All Chapters')}
+                    aria-pressed={selectedChapter === 'All Chapters'}
+                >
                     All Chapters
                 </button>
                 {
                     CHAPTERS.map((chapter, index) => {
                         return (
-                            <button className="tab" key={index} onClick={() => selectChapter(chapter)}>
+                            <button
+                                type="button"
+                                className={`tab ${selectedChapter === chapter ? 'active' : ''}`}
+                                key={index}
+                                onClick={() => selectChapter(chapter)}
+                                aria-pressed={selectedChapter === chapter}
+                            >
                                 {chapter}
                             </button>
                         )

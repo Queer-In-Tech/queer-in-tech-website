@@ -53,29 +53,30 @@ The gallery now uses a source pipeline:
 - `./public/gallery-images` is generated build output and is gitignored.
 
 #### Folder naming rules (required)
-1. Chapter folder: lowercase kebab-case and currently only `manchester` or `leeds`
+1. Chapter folder: lowercase kebab-case and currently only `manchester`, `leeds`, or `other`
 2. Event folder: `YYYY-MM-DD--event-name` (for example `2026-02-10--flutter`)
 3. Inside each event folder, add your original images (`.jpg`, `.jpeg`, `.png`, `.heic`)
 
 Example:
 `./gallery-source/manchester/2025-06-12--kraken`
 
-#### Build pipeline
-1. Run `npm run gallery:build`
-2. This generates:
+#### Gallery build workflow
+Use the path that matches what you need:
+
+1. Gallery-only generation (fast local check)
+   Run `npm run gallery:build`
+   This regenerates:
    - AVIF full: `img-001-full.avif`
    - JPEG fallback (max 1920px wide): `img-001-fallback.jpg`
    - AVIF thumbnail (max 640px wide): `img-001-thumb.avif`
    - JPEG thumbnail (max 640px wide): `img-001-thumb.jpg`
-3. Generated event data is written to `src/constants/gallery.generated.ts`
-4. Run `npm run build` to validate end-to-end
-5. CI/CD (GitHub Actions) runs the same build command and regenerates `public/gallery-images` during deployment.
+   It also regenerates `src/constants/gallery.generated.ts`.
 
-#### One-time migration from legacy folders
-If you still have the old gallery structure in `public/gallery-images`, run:
+2. Full local end-to-end build
+   Run `npm run build`
+   This already includes `npm run gallery:build`, then TypeScript build, then Vite production build.
 
-`npm run gallery:migrate-legacy`
-
-This copies legacy images into `gallery-source` using normalized chapter/event names and writes a migration report to:
-
-`scripts/gallery-migration-report.json`
+3. Deployment builds (no local build required)
+   If you deploy via `dev` or `main`, GitHub Actions runs `npm run build` in CI.
+   That means gallery generation is always re-run during deployment, including for non-gallery code changes.
+   Use the commands in the "Branching and deployment strategy" section above for the exact `dev` and `main` flow.

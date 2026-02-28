@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "gallery:migrate-legacy": "node scripts/migrateLegacyGallery.js",
     "gallery:build": "node scripts/generateGalleryData.js",
     "build": "npm run gallery:build && tsc -b && vite build",
     "lint": "eslint .",

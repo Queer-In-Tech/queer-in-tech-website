@@ -1,1 +1,1 @@
-export const CHAPTERS = ['Manchester', 'Leeds'] as const
+export const CHAPTERS = ["Manchester", "Leeds", "Other"] as const;

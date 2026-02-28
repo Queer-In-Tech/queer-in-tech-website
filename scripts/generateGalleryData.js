@@ -13,6 +13,7 @@ const OUTPUT_FILE = path.join(__dirname, "../src/constants/gallery.generated.ts"
 const CHAPTER_LABELS = {
   leeds: "Leeds",
   manchester: "Manchester",
+  other: "Other",
 };
 
 const ALLOWED_CHAPTERS = new Set(Object.keys(CHAPTER_LABELS));
@@ -212,7 +213,7 @@ export const GALLERY_DATA: GalleryEventData[] = ${JSON.stringify(events, null, 2
 async function buildGalleryData() {
   if (!fs.existsSync(SOURCE_ROOT)) {
     throw new Error(
-      `Missing gallery source folder: ${SOURCE_ROOT}. Run \`npm run gallery:migrate-legacy\` first or add source images under gallery-source/.`,
+      `Missing gallery source folder: ${SOURCE_ROOT}. Add source images under gallery-source/.`,
     );
   }
 

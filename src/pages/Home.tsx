@@ -34,13 +34,13 @@ const Home: React.FC = () => {
             <div>
                 <h3>You can find our events over on meetup</h3>
                 <a href={SOCIAL_LINKS.meetupGroup} target={"_blank"}><img className={"icon"}
-                                                                                                              src={"/meetup.png"}
+                                                                                                              src={"/website-graphics/meetup.png"}
                                                                                                               alt={"meetup link"}/></a>
             </div>
             <div>
                 <h3>Follow our linkedin page to get regular updates</h3>
                 <a href={SOCIAL_LINKS.linkedinOrg} target={"_blank"}><img className={"icon"}
-                                                                                                     src={isDarkMode ? "/linkedin-dark.png" : "/linkedin.png"}
+                                                                                                     src={isDarkMode ? "/website-graphics/linkedin-dark.png" : "/website-graphics/linkedin.png"}
                                                                                                      alt={"linkedin link"}/></a>
             </div>
         </div>

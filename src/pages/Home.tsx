@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Home.scss';
-import { SOCIAL_LINKS, TEAM_LINKS } from "../constants/links";
+import { SOCIAL_LINKS, TEAM_LINKS, TEAM_PRONOUNS } from "../constants/links";
 
 const Home: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(
@@ -20,24 +20,24 @@ const Home: React.FC = () => {
   // Array order controls card placement (left-to-right, top-to-bottom).
   // Add new people to the end of each array.
   const manchesterTeam: Person[] = [
-    { name: "Dmitry", image: "/dmitry.jpeg", linkedin: TEAM_LINKS.dmitry },
-    { name: "Jenni", image: "/jenni.jpeg", linkedin: TEAM_LINKS.jenni },
-    { name: "Stevie", image: "/stevie.jpeg", linkedin: TEAM_LINKS.stevie },
-    { name: "Joe", image: "/joe.jpeg", linkedin: TEAM_LINKS.joe },
-    { name: "Rory", image: "/rory.jpeg", linkedin: TEAM_LINKS.rory },
+    { name: "Dmitry", image: "/dmitry.jpeg", pronouns: TEAM_PRONOUNS.dmitry, linkedin: TEAM_LINKS.dmitry },
+    { name: "Jenni", image: "/jenni.jpeg", pronouns: TEAM_PRONOUNS.jenni, linkedin: TEAM_LINKS.jenni },
+    { name: "Stevie", image: "/stevie.jpeg", pronouns: TEAM_PRONOUNS.stevie, linkedin: TEAM_LINKS.stevie },
+    { name: "Joe", image: "/joe.jpeg", pronouns: TEAM_PRONOUNS.joe, linkedin: TEAM_LINKS.joe },
+    { name: "Rory", image: "/rory.jpeg", pronouns: TEAM_PRONOUNS.rory, linkedin: TEAM_LINKS.rory },
   ];
 
   const leedsTeam: Person[] = [
-    { name: "Loz", image: "/loz.jpeg", linkedin: TEAM_LINKS.loz },
+    { name: "Loz", image: "/loz.jpeg", pronouns: TEAM_PRONOUNS.loz, linkedin: TEAM_LINKS.loz },
     { name: "Alice", image: "/alice.jpeg"},
-    { name: "Akiva", image: "/akiva.jpeg", linkedin: TEAM_LINKS.akiva },
+    { name: "Akiva", image: "/akiva.jpeg", pronouns: TEAM_PRONOUNS.akiva, linkedin: TEAM_LINKS.akiva },
   ];
 
   const previousContributors: Person[] = [
-    { name: "Kaily", image: "/kaily.jpeg", linkedin: TEAM_LINKS.kaily },
-    { name: "Rebecca", image: "/rebecca.jpeg", linkedin: TEAM_LINKS.rebecca },
-    { name: "Alex", image: "/alex.jpeg", linkedin: TEAM_LINKS.alex },
-    { name: "Ari", image: "/ari.jpeg", linkedin: TEAM_LINKS.ari },
+    { name: "Kaily", image: "/kaily.jpeg", pronouns: TEAM_PRONOUNS.kaily, linkedin: TEAM_LINKS.kaily },
+    { name: "Rebecca", image: "/rebecca.jpeg", pronouns: TEAM_PRONOUNS.rebecca, linkedin: TEAM_LINKS.rebecca },
+    { name: "Alex", image: "/alex.jpeg", pronouns: TEAM_PRONOUNS.alex, linkedin: TEAM_LINKS.alex },
+    { name: "Ari", image: "/ari.jpeg", pronouns: TEAM_PRONOUNS.ari, linkedin: TEAM_LINKS.ari },
   ];
 
   return (
@@ -105,7 +105,10 @@ const PersonCard = (props: Person) => {
     const content = (
         <>
             <img src={props.image} alt={props.isPlaceholder ? "Placeholder profile" : props.name} />
-            {props.name}
+            <span className="person-name">{props.name}</span>
+            {props.pronouns ? (
+                <span className="person-pronouns">{props.pronouns}</span>
+            ) : null}
         </>
     );
 
@@ -127,6 +130,7 @@ const PersonCard = (props: Person) => {
 interface Person {
     name: string,
     image: string,
+    pronouns?: string,
     linkedin?: string,
     isPlaceholder?: boolean,
     isDarkMode?: boolean

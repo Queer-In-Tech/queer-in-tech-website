@@ -42,6 +42,20 @@ export const TEAM_LINKS = {
   alex: "https://www.linkedin.com/in/alejandro-norniella-roza-513077138/",
 } as const;
 
+export const TEAM_PRONOUNS = {
+  dmitry: "He/Him",
+  jenni: "She/Her",
+  stevie: "They/Them",
+  joe: "They/Them",
+  rory: "He/They",
+  ari: "They/Them",
+  loz: "He/They",
+  akiva: "He/Him",
+  kaily: "She/Her",
+  rebecca: "She/Her",
+  alex: "He/Him",
+} as const;
+
 export const SPEKTRIX_TALK_LINKS = {
   mariaLinkedin: "https://www.linkedin.com/in/maria-root-70048451/",
   firatLinkedin: "https://www.linkedin.com/in/firatgulmez/",

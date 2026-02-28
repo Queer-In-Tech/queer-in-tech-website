@@ -17,23 +17,27 @@ const Home: React.FC = () => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
+  // Array order controls card placement (left-to-right, top-to-bottom).
+  // Add new people to the end of each array.
   const manchesterTeam: Person[] = [
     { name: "Dmitry", image: "/dmitry.jpeg", linkedin: TEAM_LINKS.dmitry },
     { name: "Jenni", image: "/jenni.jpeg", linkedin: TEAM_LINKS.jenni },
     { name: "Stevie", image: "/stevie.jpeg", linkedin: TEAM_LINKS.stevie },
     { name: "Joe", image: "/joe.jpeg", linkedin: TEAM_LINKS.joe },
-    { name: "Ari", image: "/ari.jpeg", linkedin: TEAM_LINKS.ari },
+    { name: "Rory", image: "/rory.jpeg", linkedin: TEAM_LINKS.rory },
   ];
 
   const leedsTeam: Person[] = [
     { name: "Loz", image: "/loz.jpeg", linkedin: TEAM_LINKS.loz },
     { name: "Alice", image: "/alice.jpeg"},
+    { name: "Akiva", image: "/akiva.jpeg", linkedin: TEAM_LINKS.akiva },
   ];
 
   const previousContributors: Person[] = [
     { name: "Kaily", image: "/kaily.jpeg", linkedin: TEAM_LINKS.kaily },
     { name: "Rebecca", image: "/rebecca.jpeg", linkedin: TEAM_LINKS.rebecca },
     { name: "Alex", image: "/alex.jpeg", linkedin: TEAM_LINKS.alex },
+    { name: "Ari", image: "/ari.jpeg", linkedin: TEAM_LINKS.ari },
   ];
 
   return (
@@ -69,9 +73,9 @@ const Home: React.FC = () => {
                     <div className="team-column">
                         <h3>Leeds team</h3>
                         <div className="person-grid">
-                            {leedsTeam.map((person, index) => (
+                            {leedsTeam.map((person) => (
                                 <PersonCard
-                                    key={`leeds-${index}`}
+                                    key={person.name}
                                     isDarkMode={isDarkMode}
                                     {...person}
                                 />
@@ -83,9 +87,9 @@ const Home: React.FC = () => {
             <section className="contributors-section">
                 <h2>Previous contributors</h2>
                 <div className="person-grid">
-                    {previousContributors.map((person, index) => (
+                    {previousContributors.map((person) => (
                         <PersonCard
-                            key={`previous-${index}`}
+                            key={person.name}
                             isDarkMode={isDarkMode}
                             {...person}
                         />

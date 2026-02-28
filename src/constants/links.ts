@@ -28,34 +28,6 @@ export const EVENT_LINKS = {
     "https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/events/310956620/",
 } as const;
 
-export const TEAM_LINKS = {
-  dmitry: "https://www.linkedin.com/in/dmitry-leyko-ba800715a/",
-  jenni: "https://www.linkedin.com/in/fosterjenni/",
-  stevie: "https://www.linkedin.com/in/stevie-woods-a7806456/",
-  joe: "https://www.linkedin.com/in/twofirstnames/",
-  rory: "https://www.linkedin.com/in/rory-maclellan/",
-  ari: "https://www.linkedin.com/in/ari-abendstern/",
-  loz: "https://www.linkedin.com/in/loz-atkinson/",
-  akiva: "https://www.linkedin.com/in/akivakaufman/",
-  kaily: "https://www.linkedin.com/in/kailyisme/",
-  rebecca: "https://www.linkedin.com/in/therebeccafox/",
-  alex: "https://www.linkedin.com/in/alejandro-norniella-roza-513077138/",
-} as const;
-
-export const TEAM_PRONOUNS = {
-  dmitry: "He/Him",
-  jenni: "She/Her",
-  stevie: "They/Them",
-  joe: "They/Them",
-  rory: "He/They",
-  ari: "They/Them",
-  loz: "He/They",
-  akiva: "He/Him",
-  kaily: "She/Her",
-  rebecca: "She/Her",
-  alex: "He/Him",
-} as const;
-
 export const SPEKTRIX_TALK_LINKS = {
   mariaLinkedin: "https://www.linkedin.com/in/maria-root-70048451/",
   firatLinkedin: "https://www.linkedin.com/in/firatgulmez/",

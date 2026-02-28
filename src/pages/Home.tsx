@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Home.scss';
-import { SOCIAL_LINKS, TEAM_LINKS, TEAM_PRONOUNS } from "../constants/links";
+import { SOCIAL_LINKS } from "../constants/links";
+import { HOME_TEAM_ORDER, TEAM_MEMBERS, type TeamMember, type TeamMemberId } from "../constants/team";
 
 const Home: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(
@@ -17,28 +18,12 @@ const Home: React.FC = () => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Array order controls card placement (left-to-right, top-to-bottom).
-  // Add new people to the end of each array.
-  const manchesterTeam: Person[] = [
-    { name: "Dmitry", image: "/dmitry.jpeg", pronouns: TEAM_PRONOUNS.dmitry, linkedin: TEAM_LINKS.dmitry },
-    { name: "Jenni", image: "/jenni.jpeg", pronouns: TEAM_PRONOUNS.jenni, linkedin: TEAM_LINKS.jenni },
-    { name: "Stevie", image: "/stevie.jpeg", pronouns: TEAM_PRONOUNS.stevie, linkedin: TEAM_LINKS.stevie },
-    { name: "Joe", image: "/joe.jpeg", pronouns: TEAM_PRONOUNS.joe, linkedin: TEAM_LINKS.joe },
-    { name: "Rory", image: "/rory.jpeg", pronouns: TEAM_PRONOUNS.rory, linkedin: TEAM_LINKS.rory },
-  ];
+  const mapTeamMembers = (memberIds: readonly TeamMemberId[]): Person[] =>
+    memberIds.map((memberId) => ({ ...TEAM_MEMBERS[memberId] }));
 
-  const leedsTeam: Person[] = [
-    { name: "Loz", image: "/loz.jpeg", pronouns: TEAM_PRONOUNS.loz, linkedin: TEAM_LINKS.loz },
-    { name: "Alice", image: "/alice.jpeg"},
-    { name: "Akiva", image: "/akiva.jpeg", pronouns: TEAM_PRONOUNS.akiva, linkedin: TEAM_LINKS.akiva },
-  ];
-
-  const previousContributors: Person[] = [
-    { name: "Kaily", image: "/kaily.jpeg", pronouns: TEAM_PRONOUNS.kaily, linkedin: TEAM_LINKS.kaily },
-    { name: "Rebecca", image: "/rebecca.jpeg", pronouns: TEAM_PRONOUNS.rebecca, linkedin: TEAM_LINKS.rebecca },
-    { name: "Alex", image: "/alex.jpeg", pronouns: TEAM_PRONOUNS.alex, linkedin: TEAM_LINKS.alex },
-    { name: "Ari", image: "/ari.jpeg", pronouns: TEAM_PRONOUNS.ari, linkedin: TEAM_LINKS.ari },
-  ];
+  const manchesterTeam = mapTeamMembers(HOME_TEAM_ORDER.manchester);
+  const leedsTeam = mapTeamMembers(HOME_TEAM_ORDER.leeds);
+  const previousContributors = mapTeamMembers(HOME_TEAM_ORDER.previousContributors);
 
   return (
     <div className="home-page">
@@ -127,11 +112,7 @@ const PersonCard = (props: Person) => {
     );
 }
 
-interface Person {
-    name: string,
-    image: string,
-    pronouns?: string,
-    linkedin?: string,
+interface Person extends TeamMember {
     isPlaceholder?: boolean,
     isDarkMode?: boolean
 }

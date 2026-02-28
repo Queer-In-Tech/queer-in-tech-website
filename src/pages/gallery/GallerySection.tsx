@@ -1,46 +1,73 @@
-import type { Photo } from "react-photo-album";
 import { useNavigate } from "react-router-dom";
-import './GallerySection.scss'
+import type { GalleryImageData } from "../../constants/gallery";
+import { GalleryPicture } from "./GalleryPicture";
+import "./GallerySection.scss";
 
 interface GallerySectionProps {
-    imageKey: string
-    eventTitle: string
-    eventDate: Date
-    allImages: Photo[]
-    index: number
+  imageKey: string;
+  eventTitle: string;
+  eventDate: string;
+  allImages: GalleryImageData[];
+  index: number;
 }
 
 export const GallerySection = (props: GallerySectionProps) => {
-    const displayDirection = props.index % 2 == 0 ? "row" : "row-reverse"
-    const navigate = useNavigate();
+  const displayDirection = props.index % 2 === 0 ? "row" : "row-reverse";
+  const navigate = useNavigate();
 
-    const navigateToGallery = () => {
-        navigate(`/gallery/${props.imageKey}`)
-    }
+  const navigateToGallery = () => {
+    navigate(`/gallery/${props.imageKey}`);
+  };
 
-    return (
-        <button className="gallery-section-container" onClick={navigateToGallery}>
-            <div
-                className="gallery-section-images-container"
-                style={{flexDirection: displayDirection}}
-            >
-                {props.allImages.length > 1 ? <div className="gallery-section-small-images-container">
-                    {props.allImages[1] ?
-                        <img className="gallery-section-small-image" src={props.allImages[1].src}/> : null}
-                    {props.allImages[2] ?
-                        <img className="gallery-section-small-image" src={props.allImages[2].src}/> : null}
-                </div> : null}
-                <img className="gallery-section-large-image" src={props.allImages[0].src}/>
-            </div>
-            <div className="gallery-section-title">{props.eventTitle} - {props.eventDate.toLocaleDateString('default', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
-            })}</div>
-        </button>
-    )
-}
+  const parsedDate = new Date(props.eventDate);
+  const displayDate = Number.isNaN(parsedDate.getTime())
+    ? props.eventDate
+    : parsedDate.toLocaleDateString("default", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
 
-// function setState(arg0: { imageIsReady: boolean; }) {
-//     throw new Error("Function not implemented.");
-// }
+  return (
+    <button
+      type="button"
+      className="gallery-section-container"
+      onClick={navigateToGallery}
+    >
+      <div
+        className="gallery-section-images-container"
+        style={{ flexDirection: displayDirection }}
+      >
+        {props.allImages.length > 1 ? (
+          <div className="gallery-section-small-images-container">
+            {props.allImages[1] ? (
+              <GalleryPicture
+                className="gallery-section-small-image"
+                image={props.allImages[1]}
+                sizes="100px"
+              />
+            ) : null}
+            {props.allImages[2] ? (
+              <GalleryPicture
+                className="gallery-section-small-image"
+                image={props.allImages[2]}
+                sizes="100px"
+              />
+            ) : null}
+          </div>
+        ) : null}
+        {props.allImages[0] ? (
+          <GalleryPicture
+            className="gallery-section-large-image"
+            image={props.allImages[0]}
+            sizes="200px"
+            loading="eager"
+          />
+        ) : null}
+      </div>
+      <div className="gallery-section-title">
+        {props.eventTitle} - {displayDate}
+      </div>
+    </button>
+  );
+};

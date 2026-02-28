@@ -1,87 +1,123 @@
 import { type Photo, RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
+import type { SlideImage } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
-import "./GalleryEvent.scss"
-import { useLocation } from "react-router-dom";
-import { GALLERY_DATA } from "../../constants/gallery";
+import { useParams } from "react-router-dom";
+import { GALLERY_DATA, type GalleryImageData } from "../../constants/gallery";
+import { GalleryPicture } from "./GalleryPicture";
+import "./GalleryEvent.scss";
+
+interface GalleryAlbumPhoto extends Photo {
+  image: GalleryImageData;
+}
 
 export const GalleryEvent = () => {
-    const location = useLocation();
-    const eventKey = location.pathname.split("/gallery/")[1];
-    const [photos, setPhotos] = useState<Photo[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [index, setIndex] = useState(-1);
+  const { event: eventKey = "" } = useParams();
+  const [index, setIndex] = useState(-1);
 
-    const eventData = GALLERY_DATA.find(event => event.key === eventKey)
+  const eventData = useMemo(
+    () => GALLERY_DATA.find((event) => event.key === eventKey),
+    [eventKey],
+  );
 
-    useEffect(() => {
-        const loadImages = async () => {
-            if (!eventData) {
-                console.error(`Event with key ${eventKey} not found in GALLERY_DATA`);
-                setLoading(false);
-                return;
-            }
-
-            // http://localhost:5173/gallery/Leeds-EventName2_2024-01-01
-
-            const imagePromises: Promise<Photo>[] = [];
-
-            for (const imgPath of eventData.photos) {
-                // Create a promise to load each image and get its dimensions
-                const promise = new Promise<Photo>((resolve) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        resolve({
-                            src: imgPath,
-                            width: img.naturalWidth,
-                            height: img.naturalHeight,
-                        });
-                    };
-                    // Handle error case by providing default dimensions
-                    img.onerror = () => {
-                        console.error(`Failed to load image: ${imgPath}`);
-                        resolve({
-                            src: imgPath,
-                            width: 1000,
-                            height: 750,
-                        });
-                    };
-                    // Set the source to load the image
-                    img.src = imgPath;
-                });
-                imagePromises.push(promise);
-            }
-
-            // Wait for all images to load and get their dimensions
-            const loadedPhotos = await Promise.all(imagePromises);
-            setPhotos(loadedPhotos);
-            setLoading(false);
-        };
-
-        loadImages();
-    }, []);
-
-    if (loading) {
-        return <div className="gallery-page">Loading gallery...</div>;
+  const photos = useMemo<GalleryAlbumPhoto[]>(() => {
+    if (!eventData) {
+      return [];
     }
 
-    return <div className="gallery-page">
-        <div className="gallery-title">{eventData?.title}</div>
-        <RowsPhotoAlbum photos={photos} targetRowHeight={150} onClick={({ index }) => setIndex(index)} />
+    return eventData.images.map((image) => ({
+      src: image.jpeg.fallback,
+      width: image.width,
+      height: image.height,
+      image,
+    }));
+  }, [eventData]);
 
-        <Lightbox
-            slides={photos}
-            open={index >= 0}
-            index={index}
-            close={() => setIndex(-1)}
-            plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
-        />
-    </div>;
-}
+  const slides = useMemo<SlideImage[]>(() => {
+    if (!eventData) {
+      return [];
+    }
+
+    return eventData.images.map((image) => ({
+      src: image.jpeg.fallback,
+      width: image.width,
+      height: image.height,
+      alt: image.alt,
+    }));
+  }, [eventData]);
+
+  const imageByFallback = useMemo(() => {
+    if (!eventData) {
+      return new Map<string, GalleryImageData>();
+    }
+
+    return new Map(eventData.images.map((image) => [image.jpeg.fallback, image]));
+  }, [eventData]);
+
+  if (!eventData) {
+    return <div className="gallery-page">Event not found.</div>;
+  }
+
+  return (
+    <div className="gallery-page">
+      <div className="gallery-title">{eventData.title}</div>
+
+      <RowsPhotoAlbum<GalleryAlbumPhoto>
+        photos={photos}
+        targetRowHeight={150}
+        onClick={({ index: clickedIndex }) => setIndex(clickedIndex)}
+        render={{
+          image: (props, { photo }) => (
+            <GalleryPicture
+              image={photo.image}
+              alt={photo.image.alt}
+              className={props.className}
+              style={props.style}
+              sizes={props.sizes}
+              onClick={props.onClick}
+              loading={props.loading}
+              decoding={props.decoding}
+              draggable={props.draggable}
+              referrerPolicy={props.referrerPolicy}
+            />
+          ),
+        }}
+      />
+
+      <Lightbox
+        slides={slides}
+        open={index >= 0}
+        index={index}
+        close={() => setIndex(-1)}
+        plugins={[Fullscreen, Slideshow, Thumbnails]}
+        render={{
+          slide: ({ slide }) => {
+            const image = imageByFallback.get(slide.src);
+
+            if (!image) {
+              return null;
+            }
+
+            return (
+              <div className="gallery-lightbox-slide">
+                <GalleryPicture
+                  image={image}
+                  alt={image.alt}
+                  className="gallery-lightbox-image"
+                  sizes="100vw"
+                  loading="eager"
+                />
+              </div>
+            );
+          },
+        }}
+      />
+    </div>
+  );
+};

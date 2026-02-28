@@ -37,11 +37,11 @@ When adding or updating a URL:
 
 ## Adding your content
 ### Changing team photos
-Team photos live in `./public` and are mapped in `src/pages/Home.tsx`.
+Team photos live in `./public/people` and are mapped in `src/constants/team.ts`.
 
 You can either:
-1. Replace an existing file (for example `./public/dmitry.jpeg`), or
-2. Add a new file in `./public` and update that person's `image` value in `src/pages/Home.tsx`.
+1. Replace an existing file (for example `./public/people/dmitry.jpeg`), or
+2. Add a new file in `./public/people` and update that person's `image` value in `src/constants/team.ts`.
 
 Use `.jpeg` where possible to keep file sizes smaller.
 

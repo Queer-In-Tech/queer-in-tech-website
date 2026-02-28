@@ -10,13 +10,12 @@ const SOURCE_ROOT = path.join(__dirname, "../gallery-source");
 const GENERATED_ROOT = path.join(__dirname, "../public/gallery-images");
 const OUTPUT_FILE = path.join(__dirname, "../src/constants/gallery.generated.ts");
 
-const CHAPTER_LABELS = {
+const CHAPTER_LABEL_OVERRIDES = {
   leeds: "Leeds",
   manchester: "Manchester",
   other: "Other",
 };
 
-const ALLOWED_CHAPTERS = new Set(Object.keys(CHAPTER_LABELS));
 const CHAPTER_SLUG_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const EVENT_SLUG_REGEX = /^(\d{4}-\d{2}-\d{2})--([a-z0-9]+(?:-[a-z0-9]+)*)$/;
 const SUPPORTED_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".heic"]);
@@ -92,14 +91,10 @@ function validateChapter(chapterSlug) {
       `Invalid chapter folder "${chapterSlug}". Use lowercase kebab-case.`,
     );
   }
+}
 
-  if (!ALLOWED_CHAPTERS.has(chapterSlug)) {
-    throw new Error(
-      `Unknown chapter "${chapterSlug}". Allowed chapters: ${[
-        ...ALLOWED_CHAPTERS,
-      ].join(", ")}`,
-    );
-  }
+function chapterLabelFromSlug(chapterSlug) {
+  return CHAPTER_LABEL_OVERRIDES[chapterSlug] ?? titleFromSlug(chapterSlug);
 }
 
 function parseEventSlug(eventSlug) {
@@ -229,7 +224,7 @@ async function buildGalleryData() {
 
   for (const chapterSlug of chapterSlugs) {
     validateChapter(chapterSlug);
-    const chapterLabel = CHAPTER_LABELS[chapterSlug];
+    const chapterLabel = chapterLabelFromSlug(chapterSlug);
     const chapterDir = path.join(SOURCE_ROOT, chapterSlug);
     const eventSlugs = getDirectories(chapterDir);
 

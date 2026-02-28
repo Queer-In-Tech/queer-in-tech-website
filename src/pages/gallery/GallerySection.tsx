@@ -9,6 +9,14 @@ interface GallerySectionProps {
   eventDate: string;
   allImages: GalleryImageData[];
   index: number;
+  selectedChapter: string;
+  backRoute: string;
+}
+
+interface GalleryEventLocationState {
+  fromChapter?: string;
+  fromScrollY?: number;
+  fromRoute?: string;
 }
 
 export const GallerySection = (props: GallerySectionProps) => {
@@ -16,7 +24,13 @@ export const GallerySection = (props: GallerySectionProps) => {
   const navigate = useNavigate();
 
   const navigateToGallery = () => {
-    navigate(`/gallery/${props.imageKey}`);
+    const state: GalleryEventLocationState = {
+      fromChapter: props.selectedChapter,
+      fromScrollY: window.scrollY,
+      fromRoute: props.backRoute,
+    };
+
+    navigate(`/gallery/${props.imageKey}`, { state });
   };
 
   const parsedDate = new Date(props.eventDate);

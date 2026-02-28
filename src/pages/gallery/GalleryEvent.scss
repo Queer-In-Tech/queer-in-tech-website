@@ -6,6 +6,46 @@
   }
 }
 
+.gallery-event-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-back-button {
+  border: 1px solid #5f6af0;
+  border-radius: 6px;
+  background: transparent;
+  color: #cbc1ec;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.gallery-back-button:hover {
+  background: rgba(95, 106, 240, 0.15);
+}
+
+.gallery-back-button:focus-visible {
+  outline: 2px solid rgba(95, 106, 240, 0.6);
+  outline-offset: 2px;
+}
+
+.gallery-event-title {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+.gallery-event-meta {
+  margin: 0;
+  color: #cbc1ec;
+  font-size: 1rem;
+}
+
 .gallery-lightbox-slide {
   width: 100%;
   height: 100%;

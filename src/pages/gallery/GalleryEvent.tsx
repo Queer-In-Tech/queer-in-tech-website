@@ -8,8 +8,9 @@ import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { GALLERY_DATA, type GalleryImageData } from "../../constants/gallery";
+import { ROUTES } from "../../constants/routes";
 import { GalleryPicture } from "./GalleryPicture";
 import "./GalleryEvent.scss";
 
@@ -17,9 +18,37 @@ interface GalleryAlbumPhoto extends Photo {
   image: GalleryImageData;
 }
 
+interface GalleryEventLocationState {
+  fromChapter?: string;
+  fromScrollY?: number;
+  fromRoute?: string;
+}
+
+interface GalleryOverviewLocationState {
+  restoreChapter?: string;
+  restoreScrollY?: number;
+}
+
+function formatEventDate(date: string) {
+  const parsedDate = new Date(date);
+  if (Number.isNaN(parsedDate.getTime())) {
+    return date;
+  }
+
+  return parsedDate.toLocaleDateString("default", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 export const GalleryEvent = () => {
   const { event: eventKey = "" } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [index, setIndex] = useState(-1);
+
+  const locationState = location.state as GalleryEventLocationState | null;
 
   const eventData = useMemo(
     () => GALLERY_DATA.find((event) => event.key === eventKey),
@@ -60,13 +89,57 @@ export const GalleryEvent = () => {
     return new Map(eventData.images.map((image) => [image.jpeg.fallback, image]));
   }, [eventData]);
 
+  const navigateBackToOverview = () => {
+    const targetRoute = locationState?.fromRoute || ROUTES.gallery;
+
+    const restoreState: GalleryOverviewLocationState | undefined =
+      typeof locationState?.fromScrollY === "number" || locationState?.fromChapter
+        ? {
+            restoreChapter: locationState?.fromChapter,
+            restoreScrollY: locationState?.fromScrollY,
+          }
+        : undefined;
+
+    if (restoreState) {
+      navigate(targetRoute, { state: restoreState });
+      return;
+    }
+
+    navigate(targetRoute);
+  };
+
   if (!eventData) {
-    return <div className="gallery-page">Event not found.</div>;
+    return (
+      <div className="gallery-page">
+        <div className="gallery-event-header">
+          <button
+            type="button"
+            className="gallery-back-button"
+            onClick={navigateBackToOverview}
+          >
+            Back to events
+          </button>
+          <h1 className="gallery-event-title">Event not found</h1>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="gallery-page">
-      <div className="gallery-title">{eventData.title}</div>
+      <div className="gallery-event-header">
+        <button
+          type="button"
+          className="gallery-back-button"
+          onClick={navigateBackToOverview}
+        >
+          Back to events
+        </button>
+        <h1 className="gallery-event-title">{eventData.title}</h1>
+        <p className="gallery-event-meta">
+          {eventData.chapter} · {formatEventDate(eventData.date)}
+        </p>
+      </div>
 
       <RowsPhotoAlbum<GalleryAlbumPhoto>
         photos={photos}

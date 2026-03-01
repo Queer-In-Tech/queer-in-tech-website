@@ -1,6 +1,6 @@
 import { type Photo, RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import type { SlideImage } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -180,12 +180,27 @@ export const GalleryEvent = () => {
         close={() => setIndex(-1)}
         plugins={[Fullscreen, Slideshow, Thumbnails]}
         render={{
-          slide: ({ slide }) => {
+          slide: ({ slide, rect }) => {
             const image = imageByFallback.get(slide.src);
 
             if (!image) {
               return null;
             }
+
+            const isPortrait = image.height > image.width;
+            const imageStyle: CSSProperties = isPortrait
+              ? {
+                  height: `${rect.height}px`,
+                  width: "auto",
+                  maxHeight: `${rect.height}px`,
+                  maxWidth: `${rect.width}px`,
+                }
+              : {
+                  width: `${rect.width}px`,
+                  height: "auto",
+                  maxWidth: `${rect.width}px`,
+                  maxHeight: `${rect.height}px`,
+                };
 
             return (
               <div className="gallery-lightbox-slide">
@@ -194,6 +209,7 @@ export const GalleryEvent = () => {
                   assetBasePath={eventData.assetBasePath}
                   alt={image.alt}
                   className="gallery-lightbox-image"
+                  style={imageStyle}
                   sizes="100vw"
                   loading="eager"
                 />

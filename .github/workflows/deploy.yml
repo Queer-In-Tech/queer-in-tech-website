@@ -1,4 +1,9 @@
 name: Deploy website
+
+concurrency:
+  group: deploy-${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
 on:
   push:
     branches:
@@ -18,16 +23,59 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22.x"
+          cache: npm
       - name: Install dependencies
-        run: npm ci
-      - name: Build (includes gallery asset generation)
-        run: npm run build
+        run: |
+          start=$(date +%s)
+          npm ci
+          end=$(date +%s)
+          echo "NPM_CI_SECONDS=$((end - start))" >> "$GITHUB_ENV"
+      - name: Restore gallery derivative cache
+        id: gallery-cache
+        uses: actions/cache@v4
+        with:
+          path: public/gallery-images
+          key: gallery-${{ runner.os }}-node22-${{ hashFiles('gallery-source/**', 'scripts/generateGalleryData.js', 'package-lock.json') }}
+          restore-keys: |
+            gallery-${{ runner.os }}-node22-
+      - name: Build gallery assets (cache miss)
+        if: steps.gallery-cache.outputs.cache-hit != 'true'
+        run: |
+          start=$(date +%s)
+          npm run gallery:build
+          end=$(date +%s)
+          echo "GALLERY_BUILD_SECONDS=$((end - start))" >> "$GITHUB_ENV"
+      - name: Mark gallery build timing as skipped
+        if: steps.gallery-cache.outputs.cache-hit == 'true'
+        run: echo "GALLERY_BUILD_SECONDS=0" >> "$GITHUB_ENV"
+      - name: Build app
+        run: |
+          start=$(date +%s)
+          npm run build:app
+          end=$(date +%s)
+          echo "APP_BUILD_SECONDS=$((end - start))" >> "$GITHUB_ENV"
+      - name: Initialize deploy timings
+        run: |
+          echo "PROD_DEPLOY_SECONDS=0" >> "$GITHUB_ENV"
+          echo "DEV_DEPLOY_SECONDS=0" >> "$GITHUB_ENV"
+      - name: Start production deploy timer
+        if: github.ref == 'refs/heads/main' || github.event_name == 'repository_dispatch'
+        run: echo "PROD_DEPLOY_START=$(date +%s)" >> "$GITHUB_ENV"
       - name: Deploy production
         if: github.ref == 'refs/heads/main' || github.event_name == 'repository_dispatch'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Stop production deploy timer
+        if: (github.ref == 'refs/heads/main' || github.event_name == 'repository_dispatch') && always()
+        run: |
+          end=$(date +%s)
+          start=${PROD_DEPLOY_START:-$end}
+          echo "PROD_DEPLOY_SECONDS=$((end - start))" >> "$GITHUB_ENV"
+      - name: Start development deploy timer
+        if: github.ref == 'refs/heads/dev'
+        run: echo "DEV_DEPLOY_START=$(date +%s)" >> "$GITHUB_ENV"
       - name: Deploy development
         if: github.ref == 'refs/heads/dev'
         uses: cloudflare/wrangler-action@v3
@@ -35,3 +83,29 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --env dev
+      - name: Stop development deploy timer
+        if: github.ref == 'refs/heads/dev' && always()
+        run: |
+          end=$(date +%s)
+          start=${DEV_DEPLOY_START:-$end}
+          echo "DEV_DEPLOY_SECONDS=$((end - start))" >> "$GITHUB_ENV"
+      - name: Publish CI summary
+        if: always()
+        run: |
+          total=$(( ${NPM_CI_SECONDS:-0} + ${GALLERY_BUILD_SECONDS:-0} + ${APP_BUILD_SECONDS:-0} + ${PROD_DEPLOY_SECONDS:-0} + ${DEV_DEPLOY_SECONDS:-0} ))
+
+          {
+            echo "### Deploy workflow summary"
+            echo ""
+            echo "| Step | Duration (seconds) |"
+            echo "| --- | ---: |"
+            echo "| npm ci | ${NPM_CI_SECONDS:-0} |"
+            echo "| gallery:build | ${GALLERY_BUILD_SECONDS:-0} |"
+            echo "| build:app | ${APP_BUILD_SECONDS:-0} |"
+            echo "| deploy production | ${PROD_DEPLOY_SECONDS:-0} |"
+            echo "| deploy development | ${DEV_DEPLOY_SECONDS:-0} |"
+            echo "| total measured | ${total} |"
+            echo ""
+            echo "Gallery cache hit: \`${{ steps.gallery-cache.outputs.cache-hit || 'false' }}\`"
+            echo "Gallery cache key: \`${{ steps.gallery-cache.outputs.cache-primary-key || 'n/a' }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

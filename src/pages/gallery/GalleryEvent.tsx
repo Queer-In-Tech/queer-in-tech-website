@@ -9,7 +9,11 @@ import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { GALLERY_DATA, type GalleryImageData } from "../../constants/gallery";
+import {
+  buildGalleryImagePathsForEvent,
+  GALLERY_DATA,
+  type GalleryImageData,
+} from "../../constants/gallery";
 import { ROUTES } from "../../constants/routes";
 import { GalleryPicture } from "./GalleryPicture";
 import "./GalleryEvent.scss";
@@ -61,7 +65,7 @@ export const GalleryEvent = () => {
     }
 
     return eventData.images.map((image) => ({
-      src: image.jpeg.fallback,
+      src: buildGalleryImagePathsForEvent(eventData, image).jpeg.fallback,
       width: image.width,
       height: image.height,
       image,
@@ -74,7 +78,7 @@ export const GalleryEvent = () => {
     }
 
     return eventData.images.map((image) => ({
-      src: image.jpeg.fallback,
+      src: buildGalleryImagePathsForEvent(eventData, image).jpeg.fallback,
       width: image.width,
       height: image.height,
       alt: image.alt,
@@ -86,7 +90,12 @@ export const GalleryEvent = () => {
       return new Map<string, GalleryImageData>();
     }
 
-    return new Map(eventData.images.map((image) => [image.jpeg.fallback, image]));
+    return new Map(
+      eventData.images.map((image) => [
+        buildGalleryImagePathsForEvent(eventData, image).jpeg.fallback,
+        image,
+      ]),
+    );
   }, [eventData]);
 
   const navigateBackToOverview = () => {
@@ -149,6 +158,7 @@ export const GalleryEvent = () => {
           image: (props, { photo }) => (
             <GalleryPicture
               image={photo.image}
+              assetBasePath={eventData.assetBasePath}
               alt={photo.image.alt}
               className={props.className}
               style={props.style}
@@ -181,6 +191,7 @@ export const GalleryEvent = () => {
               <div className="gallery-lightbox-slide">
                 <GalleryPicture
                   image={image}
+                  assetBasePath={eventData.assetBasePath}
                   alt={image.alt}
                   className="gallery-lightbox-image"
                   sizes="100vw"

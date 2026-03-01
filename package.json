@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "gallery:build": "node scripts/generateGalleryData.js",
-    "build": "npm run gallery:build && tsc -b && vite build",
+    "build:app": "tsc -b && vite build",
+    "build": "npm run gallery:build && npm run build:app",
     "lint": "eslint .",
     "preview": "vite preview"
   },

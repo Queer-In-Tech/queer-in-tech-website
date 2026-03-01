@@ -1,4 +1,5 @@
 import fs from "fs";
+import os from "os";
 import path from "path";
 import sharp from "sharp";
 import { fileURLToPath } from "url";
@@ -8,7 +9,21 @@ const __dirname = path.dirname(__filename);
 
 const SOURCE_ROOT = path.join(__dirname, "../gallery-source");
 const GENERATED_ROOT = path.join(__dirname, "../public/gallery-images");
+const BUILD_MANIFEST_FILE = path.join(
+  GENERATED_ROOT,
+  ".build-manifest.json",
+);
 const OUTPUT_FILE = path.join(__dirname, "../src/constants/gallery.generated.ts");
+const BUILD_MANIFEST_VERSION = 1;
+const DEFAULT_IMAGE_CONCURRENCY = Math.max(
+  2,
+  Math.min(
+    4,
+    typeof os.availableParallelism === "function"
+      ? os.availableParallelism()
+      : os.cpus().length,
+  ),
+);
 
 const CHAPTER_LABEL_OVERRIDES = {
   leeds: "Leeds",
@@ -53,11 +68,40 @@ function getFiles(dirPath) {
   );
 }
 
+function toPosixPath(inputPath) {
+  return inputPath.split(path.sep).join("/");
+}
+
 function titleFromSlug(slug) {
   return slug
     .split("-")
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
+}
+
+function resolveImageConcurrency() {
+  const configured = process.env.GALLERY_IMAGE_CONCURRENCY;
+  if (!configured) {
+    return DEFAULT_IMAGE_CONCURRENCY;
+  }
+
+  const parsed = Number.parseInt(configured, 10);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    console.warn(
+      `Invalid GALLERY_IMAGE_CONCURRENCY="${configured}". Falling back to ${DEFAULT_IMAGE_CONCURRENCY}.`,
+    );
+    return DEFAULT_IMAGE_CONCURRENCY;
+  }
+
+  return parsed;
+}
+
+function imageFingerprint(sourceFilePath) {
+  const stats = fs.statSync(sourceFilePath);
+  return {
+    size: stats.size,
+    mtimeMs: Math.trunc(stats.mtimeMs),
+  };
 }
 
 function getOrientedDimensions(metadata, imagePath) {
@@ -71,6 +115,227 @@ function getOrientedDimensions(metadata, imagePath) {
   }
 
   return { width: metadata.width, height: metadata.height };
+}
+
+function outputFileNames(imageId) {
+  return {
+    fullAvif: `${imageId}-full.avif`,
+    fallbackJpeg: `${imageId}-fallback.jpg`,
+    thumbAvif: `${imageId}-thumb.avif`,
+    thumbJpeg: `${imageId}-thumb.jpg`,
+  };
+}
+
+function outputRelativePaths(chapterSlug, eventSlug, imageId) {
+  const names = outputFileNames(imageId);
+  const base = path.posix.join(chapterSlug, eventSlug);
+  return {
+    fullAvif: `${base}/${names.fullAvif}`,
+    fallbackJpeg: `${base}/${names.fallbackJpeg}`,
+    thumbAvif: `${base}/${names.thumbAvif}`,
+    thumbJpeg: `${base}/${names.thumbJpeg}`,
+  };
+}
+
+function outputAbsolutePaths(outputDir, imageId) {
+  const names = outputFileNames(imageId);
+  return {
+    fullAvif: path.join(outputDir, names.fullAvif),
+    fallbackJpeg: path.join(outputDir, names.fallbackJpeg),
+    thumbAvif: path.join(outputDir, names.thumbAvif),
+    thumbJpeg: path.join(outputDir, names.thumbJpeg),
+  };
+}
+
+function outputList(outputPaths) {
+  return [
+    outputPaths.fullAvif,
+    outputPaths.fallbackJpeg,
+    outputPaths.thumbAvif,
+    outputPaths.thumbJpeg,
+  ];
+}
+
+function hasExistingOutputs(relativeOutputs) {
+  return relativeOutputs.every((relativePath) =>
+    fs.existsSync(path.join(GENERATED_ROOT, relativePath)),
+  );
+}
+
+function sameOutputList(left, right) {
+  if (!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) {
+    return false;
+  }
+
+  return left.every((entry, index) => entry === right[index]);
+}
+
+function isObject(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function createEmptyBuildManifest() {
+  return {
+    version: BUILD_MANIFEST_VERSION,
+    entries: {},
+  };
+}
+
+function normalizeBuildManifestEntry(entry) {
+  if (!isObject(entry)) {
+    return null;
+  }
+
+  const { fingerprint, outputs, width, height } = entry;
+  if (!isObject(fingerprint)) {
+    return null;
+  }
+
+  if (
+    typeof fingerprint.size !== "number" ||
+    typeof fingerprint.mtimeMs !== "number"
+  ) {
+    return null;
+  }
+
+  if (
+    !Array.isArray(outputs) ||
+    outputs.length === 0 ||
+    outputs.some((outputPath) => typeof outputPath !== "string")
+  ) {
+    return null;
+  }
+
+  if (typeof width !== "number" || typeof height !== "number") {
+    return null;
+  }
+
+  return {
+    fingerprint: {
+      size: fingerprint.size,
+      mtimeMs: fingerprint.mtimeMs,
+    },
+    outputs: [...outputs],
+    width,
+    height,
+  };
+}
+
+function loadBuildManifest() {
+  if (!fs.existsSync(BUILD_MANIFEST_FILE)) {
+    return createEmptyBuildManifest();
+  }
+
+  try {
+    const raw = fs.readFileSync(BUILD_MANIFEST_FILE, "utf8");
+    const parsed = JSON.parse(raw);
+    if (!isObject(parsed) || parsed.version !== BUILD_MANIFEST_VERSION) {
+      return createEmptyBuildManifest();
+    }
+
+    if (!isObject(parsed.entries)) {
+      return createEmptyBuildManifest();
+    }
+
+    const entries = {};
+    for (const [sourcePath, entry] of Object.entries(parsed.entries)) {
+      const normalized = normalizeBuildManifestEntry(entry);
+      if (normalized) {
+        entries[sourcePath] = normalized;
+      }
+    }
+
+    return {
+      version: BUILD_MANIFEST_VERSION,
+      entries,
+    };
+  } catch (error) {
+    console.warn(
+      `Ignoring invalid gallery build manifest at ${BUILD_MANIFEST_FILE}: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    return createEmptyBuildManifest();
+  }
+}
+
+function writeBuildManifest(entries) {
+  const content = {
+    version: BUILD_MANIFEST_VERSION,
+    generatedAt: new Date().toISOString(),
+    entries,
+  };
+  fs.writeFileSync(BUILD_MANIFEST_FILE, `${JSON.stringify(content, null, 2)}\n`);
+}
+
+function listFilesRecursively(rootDir) {
+  if (!fs.existsSync(rootDir)) {
+    return [];
+  }
+
+  const result = [];
+  const stack = [rootDir];
+
+  while (stack.length > 0) {
+    const currentDir = stack.pop();
+    const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+
+    for (const entry of entries) {
+      const absolutePath = path.join(currentDir, entry.name);
+      if (entry.isDirectory()) {
+        stack.push(absolutePath);
+        continue;
+      }
+
+      if (entry.isFile()) {
+        result.push(toPosixPath(path.relative(rootDir, absolutePath)));
+      }
+    }
+  }
+
+  return result;
+}
+
+function removeFiles(relativePaths) {
+  let removed = 0;
+
+  for (const relativePath of relativePaths) {
+    const absolutePath = path.join(GENERATED_ROOT, relativePath);
+    if (!fs.existsSync(absolutePath)) {
+      continue;
+    }
+
+    const stats = fs.statSync(absolutePath);
+    if (!stats.isFile()) {
+      continue;
+    }
+
+    fs.rmSync(absolutePath, { force: true });
+    removed += 1;
+  }
+
+  return removed;
+}
+
+function pruneEmptyDirectories(dirPath) {
+  if (!fs.existsSync(dirPath)) {
+    return;
+  }
+
+  const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+  for (const entry of entries) {
+    if (!entry.isDirectory()) {
+      continue;
+    }
+
+    pruneEmptyDirectories(path.join(dirPath, entry.name));
+  }
+
+  if (dirPath === GENERATED_ROOT) {
+    return;
+  }
+
+  if (fs.readdirSync(dirPath).length === 0) {
+    fs.rmdirSync(dirPath);
+  }
 }
 
 function ensureSupportedFiles(eventDir, files) {
@@ -111,67 +376,68 @@ function parseEventSlug(eventSlug) {
   };
 }
 
-function outputImagePaths(chapterSlug, eventSlug, imageId) {
-  const base = `/gallery-images/${chapterSlug}/${eventSlug}/${imageId}`;
-  return {
-    avif: {
-      full: `${base}-full.avif`,
-      thumb: `${base}-thumb.avif`,
-    },
-    jpeg: {
-      fallback: `${base}-fallback.jpg`,
-      thumb: `${base}-thumb.jpg`,
-    },
-  };
+function outputEventAssetBasePath(chapterSlug, eventSlug) {
+  return `/gallery-images/${chapterSlug}/${eventSlug}/`;
 }
 
 async function generateDerivatives({
   sourceFilePath,
-  outputDir,
-  imageId,
-  chapterSlug,
-  eventSlug,
-  title,
-  index,
+  absoluteOutputs,
 }) {
   const metadata = await sharp(sourceFilePath).metadata();
   const dimensions = getOrientedDimensions(metadata, sourceFilePath);
-  const imageOutputPaths = outputImagePaths(chapterSlug, eventSlug, imageId);
-
-  const fullAvifPath = path.join(outputDir, `${imageId}-full.avif`);
-  const fallbackJpegPath = path.join(outputDir, `${imageId}-fallback.jpg`);
-  const thumbAvifPath = path.join(outputDir, `${imageId}-thumb.avif`);
-  const thumbJpegPath = path.join(outputDir, `${imageId}-thumb.jpg`);
 
   const base = sharp(sourceFilePath).rotate();
 
-  await base.clone().avif({ quality: 62, effort: 4 }).toFile(fullAvifPath);
-  await base
-    .clone()
-    .resize({ width: 1920, withoutEnlargement: true })
-    .jpeg({ quality: 82, mozjpeg: true })
-    .toFile(fallbackJpegPath);
-  await base
-    .clone()
-    .resize({ width: 640, withoutEnlargement: true })
-    .avif({ quality: 60, effort: 4 })
-    .toFile(thumbAvifPath);
-  await base
-    .clone()
-    .resize({ width: 640, withoutEnlargement: true })
-    .jpeg({ quality: 78, mozjpeg: true })
-    .toFile(thumbJpegPath);
+  await Promise.all([
+    base.clone().avif({ quality: 62, effort: 4 }).toFile(absoluteOutputs.fullAvif),
+    base
+      .clone()
+      .resize({ width: 1920, withoutEnlargement: true })
+      .jpeg({ quality: 82, mozjpeg: true })
+      .toFile(absoluteOutputs.fallbackJpeg),
+    base
+      .clone()
+      .resize({ width: 640, withoutEnlargement: true })
+      .avif({ quality: 60, effort: 4 })
+      .toFile(absoluteOutputs.thumbAvif),
+    base
+      .clone()
+      .resize({ width: 640, withoutEnlargement: true })
+      .jpeg({ quality: 78, mozjpeg: true })
+      .toFile(absoluteOutputs.thumbJpeg),
+  ]);
 
-  return {
-    id: imageId,
-    alt: `${title} photo ${index + 1}`,
-    width: dimensions.width,
-    height: dimensions.height,
-    ...imageOutputPaths,
-  };
+  return dimensions;
 }
 
-function createManifestFile(events) {
+async function mapWithConcurrency(items, concurrency, mapper) {
+  if (items.length === 0) {
+    return [];
+  }
+
+  const workerCount = Math.min(concurrency, items.length);
+  const results = new Array(items.length);
+  let currentIndex = 0;
+
+  async function worker() {
+    while (true) {
+      const index = currentIndex;
+      currentIndex += 1;
+
+      if (index >= items.length) {
+        return;
+      }
+
+      results[index] = await mapper(items[index], index);
+    }
+  }
+
+  await Promise.all(Array.from({ length: workerCount }, () => worker()));
+  return results;
+}
+
+function createGalleryDataFile(events) {
   const content = `// AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
 // Run \`npm run gallery:build\` to regenerate.
 
@@ -180,14 +446,6 @@ export interface GalleryImageData {
   alt: string;
   width: number;
   height: number;
-  avif: {
-    full: string;
-    thumb: string;
-  };
-  jpeg: {
-    fallback: string;
-    thumb: string;
-  };
 }
 
 export interface GalleryEventData {
@@ -196,6 +454,7 @@ export interface GalleryEventData {
   chapterSlug: string;
   title: string;
   date: string;
+  assetBasePath: string;
   images: GalleryImageData[];
 }
 
@@ -217,10 +476,20 @@ async function buildGalleryData() {
     throw new Error(`No chapters found in ${SOURCE_ROOT}.`);
   }
 
-  fs.rmSync(GENERATED_ROOT, { recursive: true, force: true });
   fs.mkdirSync(GENERATED_ROOT, { recursive: true });
+  const previousManifest = loadBuildManifest();
+  const previousEntries = previousManifest.entries;
+  const nextEntries = {};
+  const expectedOutputFiles = new Set();
+  const imageConcurrency = resolveImageConcurrency();
 
   const events = [];
+  const stats = {
+    generated: 0,
+    reused: 0,
+    removed: 0,
+    images: 0,
+  };
 
   for (const chapterSlug of chapterSlugs) {
     validateChapter(chapterSlug);
@@ -243,25 +512,67 @@ async function buildGalleryData() {
       const outputDir = path.join(GENERATED_ROOT, chapterSlug, eventSlug);
       fs.mkdirSync(outputDir, { recursive: true });
 
-      const images = [];
+      const images = await mapWithConcurrency(
+        sourceFiles,
+        imageConcurrency,
+        async (sourceFile, index) => {
+          const sourceFilePath = path.join(eventDir, sourceFile);
+          const sourceRelativePath = toPosixPath(
+            path.relative(SOURCE_ROOT, sourceFilePath),
+          );
+          const fingerprint = imageFingerprint(sourceFilePath);
+          const imageId = `img-${String(index + 1).padStart(3, "0")}`;
+          const relativeOutputs = outputRelativePaths(
+            chapterSlug,
+            eventSlug,
+            imageId,
+          );
+          const relativeOutputList = outputList(relativeOutputs);
+          const absoluteOutputs = outputAbsolutePaths(outputDir, imageId);
+          const previousEntry = previousEntries[sourceRelativePath];
 
-      for (let index = 0; index < sourceFiles.length; index += 1) {
-        const sourceFile = sourceFiles[index];
-        const sourceFilePath = path.join(eventDir, sourceFile);
-        const imageId = `img-${String(index + 1).padStart(3, "0")}`;
+          for (const outputPath of relativeOutputList) {
+            expectedOutputFiles.add(outputPath);
+          }
 
-        const imageData = await generateDerivatives({
-          sourceFilePath,
-          outputDir,
-          imageId,
-          chapterSlug,
-          eventSlug,
-          title,
-          index,
-        });
+          const canReuse =
+            previousEntry &&
+            previousEntry.fingerprint.size === fingerprint.size &&
+            previousEntry.fingerprint.mtimeMs === fingerprint.mtimeMs &&
+            sameOutputList(previousEntry.outputs, relativeOutputList) &&
+            hasExistingOutputs(relativeOutputList);
 
-        images.push(imageData);
-      }
+          let dimensions;
+          if (canReuse) {
+            dimensions = {
+              width: previousEntry.width,
+              height: previousEntry.height,
+            };
+            stats.reused += 1;
+          } else {
+            dimensions = await generateDerivatives({
+              sourceFilePath,
+              absoluteOutputs,
+            });
+            stats.generated += 1;
+          }
+
+          nextEntries[sourceRelativePath] = {
+            fingerprint,
+            outputs: relativeOutputList,
+            width: dimensions.width,
+            height: dimensions.height,
+          };
+          stats.images += 1;
+
+          return {
+            id: imageId,
+            alt: `${title} photo ${index + 1}`,
+            width: dimensions.width,
+            height: dimensions.height,
+          };
+        },
+      );
 
       events.push({
         key: `${chapterSlug}-${eventSlug}`,
@@ -269,6 +580,7 @@ async function buildGalleryData() {
         chapterSlug,
         title,
         date,
+        assetBasePath: outputEventAssetBasePath(chapterSlug, eventSlug),
         images,
       });
     }
@@ -286,9 +598,41 @@ async function buildGalleryData() {
     return a.title.localeCompare(b.title);
   });
 
-  createManifestFile(sortedEvents);
+  const staleOutputs = new Set();
+  for (const [sourcePath, previousEntry] of Object.entries(previousEntries)) {
+    const nextEntry = nextEntries[sourcePath];
+    if (!nextEntry) {
+      for (const outputPath of previousEntry.outputs) {
+        staleOutputs.add(outputPath);
+      }
+      continue;
+    }
+
+    for (const outputPath of previousEntry.outputs) {
+      if (!nextEntry.outputs.includes(outputPath)) {
+        staleOutputs.add(outputPath);
+      }
+    }
+  }
+
+  const existingGeneratedFiles = listFilesRecursively(GENERATED_ROOT);
+  for (const generatedFile of existingGeneratedFiles) {
+    if (generatedFile === path.basename(BUILD_MANIFEST_FILE)) {
+      continue;
+    }
+
+    if (!expectedOutputFiles.has(generatedFile)) {
+      staleOutputs.add(generatedFile);
+    }
+  }
+
+  stats.removed = removeFiles(staleOutputs);
+  pruneEmptyDirectories(GENERATED_ROOT);
+
+  writeBuildManifest(nextEntries);
+  createGalleryDataFile(sortedEvents);
   console.log(
-    `Gallery build complete: ${sortedEvents.length} events generated from ${SOURCE_ROOT}`,
+    `Gallery build complete: ${sortedEvents.length} events, ${stats.images} images (${stats.generated} generated, ${stats.reused} reused), ${stats.removed} stale files removed. Concurrency: ${imageConcurrency}.`,
   );
 }
 

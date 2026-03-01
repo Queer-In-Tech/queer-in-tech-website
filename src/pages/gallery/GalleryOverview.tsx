@@ -114,6 +114,7 @@ export default function GalleryOverview() {
               key={event.key}
               imageKey={event.key}
               eventTitle={event.title}
+              assetBasePath={event.assetBasePath}
               allImages={event.images.slice(0, 3)}
               index={index}
               eventDate={event.date}

@@ -7,6 +7,7 @@ interface GallerySectionProps {
   imageKey: string;
   eventTitle: string;
   eventDate: string;
+  assetBasePath: string;
   allImages: GalleryImageData[];
   index: number;
   selectedChapter: string;
@@ -58,6 +59,7 @@ export const GallerySection = (props: GallerySectionProps) => {
               <GalleryPicture
                 className="gallery-section-small-image"
                 image={props.allImages[1]}
+                assetBasePath={props.assetBasePath}
                 sizes="100px"
               />
             ) : null}
@@ -65,6 +67,7 @@ export const GallerySection = (props: GallerySectionProps) => {
               <GalleryPicture
                 className="gallery-section-small-image"
                 image={props.allImages[2]}
+                assetBasePath={props.assetBasePath}
                 sizes="100px"
               />
             ) : null}
@@ -74,6 +77,7 @@ export const GallerySection = (props: GallerySectionProps) => {
           <GalleryPicture
             className="gallery-section-large-image"
             image={props.allImages[0]}
+            assetBasePath={props.assetBasePath}
             sizes="200px"
             loading="eager"
           />

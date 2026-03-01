@@ -65,7 +65,8 @@ Use the path that matches what you need:
 
 1. Gallery-only generation (fast local check)
    Run `npm run gallery:build`
-   This regenerates:
+   This incrementally regenerates only changed images and keeps a build-state manifest at `public/gallery-images/.build-manifest.json`.
+   Generated derivatives include:
    - AVIF full: `img-001-full.avif`
    - JPEG fallback (max 1920px wide): `img-001-fallback.jpg`
    - AVIF thumbnail (max 640px wide): `img-001-thumb.avif`
@@ -74,9 +75,13 @@ Use the path that matches what you need:
 
 2. Full local end-to-end build
    Run `npm run build`
-   This already includes `npm run gallery:build`, then TypeScript build, then Vite production build.
+   This already includes `npm run gallery:build`, then `npm run build:app` (TypeScript + Vite production build).
 
 3. Deployment builds (no local build required)
-   If you deploy via `dev` or `main`, GitHub Actions runs `npm run build` in CI.
-   That means gallery generation is always re-run during deployment, including for non-gallery code changes.
+   If you deploy via `dev` or `main`, GitHub Actions runs:
+   - `npm ci` with npm cache enabled
+   - restore of cached `public/gallery-images`
+   - `npm run gallery:build` only on cache miss
+   - `npm run build:app` on every run
+   Gallery cache keys are derived from `gallery-source/**`, `scripts/generateGalleryData.js`, and `package-lock.json`.
    Use the commands in the "Branching and deployment strategy" section above for the exact `dev` and `main` flow.

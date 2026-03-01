@@ -1,6 +1,7 @@
 import fs from "fs";
 import os from "os";
 import path from "path";
+import crypto from "crypto";
 import sharp from "sharp";
 import { fileURLToPath } from "url";
 
@@ -14,7 +15,7 @@ const BUILD_MANIFEST_FILE = path.join(
   ".build-manifest.json",
 );
 const OUTPUT_FILE = path.join(__dirname, "../src/constants/gallery.generated.ts");
-const BUILD_MANIFEST_VERSION = 1;
+const BUILD_MANIFEST_VERSION = 2;
 const DEFAULT_IMAGE_CONCURRENCY = Math.max(
   2,
   Math.min(
@@ -100,7 +101,10 @@ function imageFingerprint(sourceFilePath) {
   const stats = fs.statSync(sourceFilePath);
   return {
     size: stats.size,
-    mtimeMs: Math.trunc(stats.mtimeMs),
+    hash: crypto
+      .createHash("sha1")
+      .update(fs.readFileSync(sourceFilePath))
+      .digest("hex"),
   };
 }
 
@@ -193,7 +197,8 @@ function normalizeBuildManifestEntry(entry) {
 
   if (
     typeof fingerprint.size !== "number" ||
-    typeof fingerprint.mtimeMs !== "number"
+    typeof fingerprint.hash !== "string" ||
+    fingerprint.hash.length === 0
   ) {
     return null;
   }
@@ -213,7 +218,7 @@ function normalizeBuildManifestEntry(entry) {
   return {
     fingerprint: {
       size: fingerprint.size,
-      mtimeMs: fingerprint.mtimeMs,
+      hash: fingerprint.hash,
     },
     outputs: [...outputs],
     width,
@@ -538,7 +543,7 @@ async function buildGalleryData() {
           const canReuse =
             previousEntry &&
             previousEntry.fingerprint.size === fingerprint.size &&
-            previousEntry.fingerprint.mtimeMs === fingerprint.mtimeMs &&
+            previousEntry.fingerprint.hash === fingerprint.hash &&
             sameOutputList(previousEntry.outputs, relativeOutputList) &&
             hasExistingOutputs(relativeOutputList);
 

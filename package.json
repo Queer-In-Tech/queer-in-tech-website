@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run gallery:build && vite",
     "gallery:build": "node scripts/generateGalleryData.js",
     "build:app": "tsc -b && vite build",
     "build": "npm run gallery:build && npm run build:app",

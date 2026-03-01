@@ -38,16 +38,12 @@ jobs:
           key: gallery-${{ runner.os }}-node22-${{ hashFiles('gallery-source/**', 'scripts/generateGalleryData.js', 'package-lock.json') }}
           restore-keys: |
             gallery-${{ runner.os }}-node22-
-      - name: Build gallery assets (cache miss)
-        if: steps.gallery-cache.outputs.cache-hit != 'true'
+      - name: Build gallery assets
         run: |
           start=$(date +%s)
           npm run gallery:build
           end=$(date +%s)
           echo "GALLERY_BUILD_SECONDS=$((end - start))" >> "$GITHUB_ENV"
-      - name: Mark gallery build timing as skipped
-        if: steps.gallery-cache.outputs.cache-hit == 'true'
-        run: echo "GALLERY_BUILD_SECONDS=0" >> "$GITHUB_ENV"
       - name: Build app
         run: |
           start=$(date +%s)

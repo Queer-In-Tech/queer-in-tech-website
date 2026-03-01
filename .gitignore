@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 public/gallery-images/
+src/constants/gallery.generated.ts
 
 # Editor directories and files
 .vscode/*

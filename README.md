@@ -24,6 +24,8 @@ To run the app, open it up and run:
 `npm i`
 `npm run dev`
 
+`npm run dev` now runs `npm run gallery:build` first so `src/constants/gallery.generated.ts` and gallery derivatives are up to date before Vite starts.
+
 ## Shared constants (links and routes)
 To avoid duplication, static links and routes are stored in constants and imported where needed.
 
@@ -81,7 +83,7 @@ Use the path that matches what you need:
    If you deploy via `dev` or `main`, GitHub Actions runs:
    - `npm ci` with npm cache enabled
    - restore of cached `public/gallery-images`
-   - `npm run gallery:build` only on cache miss
+   - `npm run gallery:build` on every run (incremental; reuses cached derivatives when unchanged)
    - `npm run build:app` on every run
    Gallery cache keys are derived from `gallery-source/**`, `scripts/generateGalleryData.js`, and `package-lock.json`.
    Use the commands in the "Branching and deployment strategy" section above for the exact `dev` and `main` flow.

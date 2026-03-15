@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import type { GalleryImageData } from "../../constants/gallery";
+import { Link } from "react-router-dom";
+import type { GalleryImageData, GalleryEventLocationState } from "../../constants/gallery";
 import { GalleryPicture } from "./GalleryPicture";
+import { formatEventDate } from "../../utils/formatEventDate";
 import "./GallerySection.scss";
 
 interface GallerySectionProps {
@@ -14,40 +15,20 @@ interface GallerySectionProps {
   backRoute: string;
 }
 
-interface GalleryEventLocationState {
-  fromChapter?: string;
-  fromScrollY?: number;
-  fromRoute?: string;
-}
-
 export const GallerySection = (props: GallerySectionProps) => {
   const displayDirection = props.index % 2 === 0 ? "row" : "row-reverse";
-  const navigate = useNavigate();
 
-  const navigateToGallery = () => {
-    const state: GalleryEventLocationState = {
-      fromChapter: props.selectedChapter,
-      fromScrollY: window.scrollY,
-      fromRoute: props.backRoute,
-    };
-
-    navigate(`/gallery/${props.imageKey}`, { state });
+  const state: GalleryEventLocationState = {
+    fromChapter: props.selectedChapter,
+    fromScrollY: window.scrollY,
+    fromRoute: props.backRoute,
   };
 
-  const parsedDate = new Date(props.eventDate);
-  const displayDate = Number.isNaN(parsedDate.getTime())
-    ? props.eventDate
-    : parsedDate.toLocaleDateString("default", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-
   return (
-    <button
-      type="button"
+    <Link
+      to={`/gallery/${props.imageKey}`}
+      state={state}
       className="gallery-section-container"
-      onClick={navigateToGallery}
     >
       <div
         className="gallery-section-images-container"
@@ -84,8 +65,8 @@ export const GallerySection = (props: GallerySectionProps) => {
         ) : null}
       </div>
       <div className="gallery-section-title">
-        {props.eventTitle} - {displayDate}
+        {props.eventTitle} - {formatEventDate(props.eventDate)}
       </div>
-    </button>
+    </Link>
   );
 };

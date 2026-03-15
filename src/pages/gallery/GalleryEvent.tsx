@@ -1,5 +1,6 @@
 import { type Photo, RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
+import { Helmet } from "react-helmet-async";
 import { useMemo, useState, type CSSProperties } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import type { SlideImage } from "yet-another-react-lightbox";
@@ -12,20 +13,16 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   buildGalleryImagePathsForEvent,
   GALLERY_DATA,
+  type GalleryEventLocationState,
   type GalleryImageData,
 } from "../../constants/gallery";
 import { ROUTES } from "../../constants/routes";
 import { GalleryPicture } from "./GalleryPicture";
+import { formatEventDate } from "../../utils/formatEventDate";
 import "./GalleryEvent.scss";
 
 interface GalleryAlbumPhoto extends Photo {
   image: GalleryImageData;
-}
-
-interface GalleryEventLocationState {
-  fromChapter?: string;
-  fromScrollY?: number;
-  fromRoute?: string;
 }
 
 interface GalleryOverviewLocationState {
@@ -33,18 +30,9 @@ interface GalleryOverviewLocationState {
   restoreScrollY?: number;
 }
 
-function formatEventDate(date: string) {
-  const parsedDate = new Date(date);
-  if (Number.isNaN(parsedDate.getTime())) {
-    return date;
-  }
-
-  return parsedDate.toLocaleDateString("default", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
+const ROW_HEIGHT_FEW = 220;
+const ROW_HEIGHT_MEDIUM = 320;
+const ROW_HEIGHT_MANY = 150;
 
 export const GalleryEvent = () => {
   const { event: eventKey = "" } = useParams();
@@ -134,12 +122,16 @@ export const GalleryEvent = () => {
     );
   }
   const rowHeight =
-    photos.length <= 3 ? 220 :
-      photos.length <= 10 ? 320 :
-        150;
+    photos.length <= 3 ? ROW_HEIGHT_FEW :
+      photos.length <= 10 ? ROW_HEIGHT_MEDIUM :
+        ROW_HEIGHT_MANY;
 
   return (
     <div className="gallery-page">
+      <Helmet>
+        <title>{eventData.title} | Gallery | Queer in Tech</title>
+        <meta name="description" content={`Photos from ${eventData.title} — a Queer in Tech event in ${eventData.chapter}.`} />
+      </Helmet>
       <div className="gallery-event-header">
         <button
           type="button"

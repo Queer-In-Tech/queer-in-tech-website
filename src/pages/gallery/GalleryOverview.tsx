@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GallerySection } from "./GallerySection";
 import { GALLERY_DATA, type GalleryEventData } from "../../constants/gallery";
@@ -88,6 +89,10 @@ export default function GalleryOverview() {
 
   return (
     <section id="gallery-page">
+      <Helmet>
+        <title>Gallery | Queer in Tech</title>
+        <meta name="description" content="Browse photos from past Queer in Tech events in Manchester and Leeds." />
+      </Helmet>
       <h2 className="page-title">Past Events</h2>
       <p className="page-subtitle">
         You can find all the pictures from our previous events here

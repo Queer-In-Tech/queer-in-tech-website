@@ -1,5 +1,6 @@
 #gallery-page {
-    padding:2em;
+    padding: clamp(1rem, 2.5vw, 2rem);
+    overflow-x: hidden;
 }
 
 #tabs-container {
@@ -10,40 +11,48 @@
 }
 
 #events-container {
-    display: flex;
-    flex-direction: row;
-    gap: 2em;
-    flex-wrap: wrap;
+    display: grid;
+    width: 100%;
+    gap: clamp(1rem, 2vw, 2rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    align-items: stretch;
+    padding-top: 16px;
+}
+
+@media (min-width: 1100px) {
+    #events-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 .tab {
-    border: 1px solid #222;
+    border: none;
     margin: 0;
-    padding: 0.4em 0.8em;
-    background: transparent;
-    color: #cbc1ec;
-    border-radius: 6px;
+    padding: 0.5em 1.2em;
+    background: #f3f3fa;
+    color: #222;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
-    font-size: 0.95rem;
-    line-height: 1;
-    /* align with other layout spacing */
+    font-size: 1rem;
+    line-height: 1.2;
     margin-right: 0.5em;
-}
+    box-shadow: 0 2px 6px rgba(60, 60, 90, 0.08);
+    transition: box-shadow 0.2s;
 
-.tab:hover {
-    background: rgba(0,0,0,0.04);
-}
-
-.tab:focus {
-    outline: 2px solid rgba(0,123,255,0.25);
-    outline-offset: 2px;
+    &:hover,
+    &:focus {
+        background: #7353f8;
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(60, 60, 90, 0.18);
+        outline: none;
+    }
 }
 
 .tab.active {
-    background-color: #323e85; /* selected colour — adjust to your theme */
+    background: #222;
     color: #fff;
-    border-color: #7353f8; /* if your preprocessor supports darken; otherwise keep explicit color */
+    box-shadow: 0 6px 18px rgba(60, 60, 90, 0.22);
+    border: none;
 }
 
 .page-title {

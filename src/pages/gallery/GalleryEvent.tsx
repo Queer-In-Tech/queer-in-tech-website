@@ -104,9 +104,9 @@ export const GalleryEvent = () => {
     const restoreState: GalleryOverviewLocationState | undefined =
       typeof locationState?.fromScrollY === "number" || locationState?.fromChapter
         ? {
-            restoreChapter: locationState?.fromChapter,
-            restoreScrollY: locationState?.fromScrollY,
-          }
+          restoreChapter: locationState?.fromChapter,
+          restoreScrollY: locationState?.fromScrollY,
+        }
         : undefined;
 
     if (restoreState) {
@@ -133,6 +133,10 @@ export const GalleryEvent = () => {
       </div>
     );
   }
+  const rowHeight =
+    photos.length <= 3 ? 220 :
+      photos.length <= 10 ? 320 :
+        150;
 
   return (
     <div className="gallery-page">
@@ -152,7 +156,7 @@ export const GalleryEvent = () => {
 
       <RowsPhotoAlbum<GalleryAlbumPhoto>
         photos={photos}
-        targetRowHeight={150}
+        targetRowHeight={rowHeight}
         onClick={({ index: clickedIndex }) => setIndex(clickedIndex)}
         render={{
           image: (props, { photo }) => (
@@ -190,17 +194,17 @@ export const GalleryEvent = () => {
             const isPortrait = image.height > image.width;
             const imageStyle: CSSProperties = isPortrait
               ? {
-                  height: `${rect.height}px`,
-                  width: "auto",
-                  maxHeight: `${rect.height}px`,
-                  maxWidth: `${rect.width}px`,
-                }
+                height: `${rect.height}px`,
+                width: "auto",
+                maxHeight: `${rect.height}px`,
+                maxWidth: `${rect.width}px`,
+              }
               : {
-                  width: `${rect.width}px`,
-                  height: "auto",
-                  maxWidth: `${rect.width}px`,
-                  maxHeight: `${rect.height}px`,
-                };
+                width: `${rect.width}px`,
+                height: "auto",
+                maxWidth: `${rect.width}px`,
+                maxHeight: `${rect.height}px`,
+              };
 
             return (
               <div className="gallery-lightbox-slide">

@@ -38,10 +38,10 @@ export const GallerySection = (props: GallerySectionProps) => {
   const displayDate = Number.isNaN(parsedDate.getTime())
     ? props.eventDate
     : parsedDate.toLocaleDateString("default", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      });
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
 
   return (
     <button

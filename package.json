@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "npm run gallery:build && vite",
+    "gallery:build": "node scripts/generateGalleryData.js",
+    "build:app": "tsc -b && vite build",
+    "build": "npm run gallery:build && npm run build:app",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -26,6 +28,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
     "sass-embedded": "^1.89.2",
+    "sharp": "^0.34.4",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0",

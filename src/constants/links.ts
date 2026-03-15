@@ -28,18 +28,6 @@ export const EVENT_LINKS = {
     "https://www.meetup.com/queer-in-tech-inclusive-tech-meetup/events/310956620/",
 } as const;
 
-export const TEAM_LINKS = {
-  dmitry: "https://www.linkedin.com/in/dmitry-leyko-ba800715a/",
-  jenni: "https://www.linkedin.com/in/fosterjenni/",
-  stevie: "https://www.linkedin.com/in/stevie-woods-a7806456/",
-  joe: "https://www.linkedin.com/in/twofirstnames/",
-  ari: "https://www.linkedin.com/in/ari-abendstern/",
-  loz: "https://www.linkedin.com/in/loz-atkinson/",
-  kaily: "https://www.linkedin.com/in/kailyisme/",
-  rebecca: "https://www.linkedin.com/in/therebeccafox/",
-  alex: "https://www.linkedin.com/in/alejandro-norniella-roza-513077138/",
-} as const;
-
 export const SPEKTRIX_TALK_LINKS = {
   mariaLinkedin: "https://www.linkedin.com/in/maria-root-70048451/",
   firatLinkedin: "https://www.linkedin.com/in/firatgulmez/",

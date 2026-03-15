@@ -27,7 +27,7 @@ function SocialButtons() {
         target="_blank"
       >
         <img
-          src={"/linkedin-white.png"}
+          src={"/website-graphics/linkedin-white.png"}
           alt={"LinkedIn Logo"}
           className="social-logo"
         />
@@ -37,7 +37,7 @@ function SocialButtons() {
 
       {/* <a className="social-button-discord" href="" target="_blank">
           <img
-            src={./discord-white.png"}
+            src={"/website-graphics/discord-white.png"}
             alt={"Discord Logo"}
             className="social-logo"
           />
@@ -48,7 +48,7 @@ function SocialButtons() {
         target="_blank"
       >
         <img
-          src={"/meetup-white.png"}
+          src={"/website-graphics/meetup-white.png"}
           alt={"Meetup Logo"}
           className="social-logo"
         />

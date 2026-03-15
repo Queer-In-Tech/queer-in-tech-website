@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Home.scss';
-import { SOCIAL_LINKS, TEAM_LINKS } from "../constants/links";
+import { SOCIAL_LINKS } from "../constants/links";
+import { HOME_TEAM_ORDER, TEAM_MEMBERS, type TeamMember, type TeamMemberId } from "../constants/team";
 
 const Home: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(
@@ -17,24 +18,12 @@ const Home: React.FC = () => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  const manchesterTeam: Person[] = [
-    { name: "Dmitry", image: "/dmitry.jpeg", linkedin: TEAM_LINKS.dmitry },
-    { name: "Jenni", image: "/jenni.jpeg", linkedin: TEAM_LINKS.jenni },
-    { name: "Stevie", image: "/stevie.jpeg", linkedin: TEAM_LINKS.stevie },
-    { name: "Joe", image: "/joe.jpeg", linkedin: TEAM_LINKS.joe },
-    { name: "Ari", image: "/ari.jpeg", linkedin: TEAM_LINKS.ari },
-  ];
+  const mapTeamMembers = (memberIds: readonly TeamMemberId[]): Person[] =>
+    memberIds.map((memberId) => ({ ...TEAM_MEMBERS[memberId] }));
 
-  const leedsTeam: Person[] = [
-    { name: "Loz", image: "/loz.jpeg", linkedin: TEAM_LINKS.loz },
-    { name: "Alice", image: "/alice.jpeg"},
-  ];
-
-  const previousContributors: Person[] = [
-    { name: "Kaily", image: "/kaily.jpeg", linkedin: TEAM_LINKS.kaily },
-    { name: "Rebecca", image: "/rebecca.jpeg", linkedin: TEAM_LINKS.rebecca },
-    { name: "Alex", image: "/alex.jpeg", linkedin: TEAM_LINKS.alex },
-  ];
+  const manchesterTeam = mapTeamMembers(HOME_TEAM_ORDER.manchester);
+  const leedsTeam = mapTeamMembers(HOME_TEAM_ORDER.leeds);
+  const previousContributors = mapTeamMembers(HOME_TEAM_ORDER.previousContributors);
 
   return (
     <div className="home-page">
@@ -45,13 +34,13 @@ const Home: React.FC = () => {
             <div>
                 <h3>You can find our events over on meetup</h3>
                 <a href={SOCIAL_LINKS.meetupGroup} target={"_blank"}><img className={"icon"}
-                                                                                                              src={"/meetup.png"}
+                                                                                                              src={"/website-graphics/meetup.png"}
                                                                                                               alt={"meetup link"}/></a>
             </div>
             <div>
                 <h3>Follow our linkedin page to get regular updates</h3>
                 <a href={SOCIAL_LINKS.linkedinOrg} target={"_blank"}><img className={"icon"}
-                                                                                                     src={isDarkMode ? "/linkedin-dark.png" : "/linkedin.png"}
+                                                                                                     src={isDarkMode ? "/website-graphics/linkedin-dark.png" : "/website-graphics/linkedin.png"}
                                                                                                      alt={"linkedin link"}/></a>
             </div>
         </div>
@@ -69,9 +58,9 @@ const Home: React.FC = () => {
                     <div className="team-column">
                         <h3>Leeds team</h3>
                         <div className="person-grid">
-                            {leedsTeam.map((person, index) => (
+                            {leedsTeam.map((person) => (
                                 <PersonCard
-                                    key={`leeds-${index}`}
+                                    key={person.name}
                                     isDarkMode={isDarkMode}
                                     {...person}
                                 />
@@ -83,9 +72,9 @@ const Home: React.FC = () => {
             <section className="contributors-section">
                 <h2>Previous contributors</h2>
                 <div className="person-grid">
-                    {previousContributors.map((person, index) => (
+                    {previousContributors.map((person) => (
                         <PersonCard
-                            key={`previous-${index}`}
+                            key={person.name}
                             isDarkMode={isDarkMode}
                             {...person}
                         />
@@ -101,7 +90,10 @@ const PersonCard = (props: Person) => {
     const content = (
         <>
             <img src={props.image} alt={props.isPlaceholder ? "Placeholder profile" : props.name} />
-            {props.name}
+            <span className="person-name">{props.name}</span>
+            {props.pronouns ? (
+                <span className="person-pronouns">{props.pronouns}</span>
+            ) : null}
         </>
     );
 
@@ -120,10 +112,7 @@ const PersonCard = (props: Person) => {
     );
 }
 
-interface Person {
-    name: string,
-    image: string,
-    linkedin?: string,
+interface Person extends TeamMember {
     isPlaceholder?: boolean,
     isDarkMode?: boolean
 }

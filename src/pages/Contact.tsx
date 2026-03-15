@@ -26,7 +26,7 @@ function SocialButtons() {
         target="_blank"
       >
         <img
-          src={"/linkedin-white.png"}
+          src={"/website-graphics/linkedin-white.png"}
           alt={"LinkedIn Logo"}
           className="social-logo"
         />
@@ -35,7 +35,7 @@ function SocialButtons() {
       {/* Discord button that can be included when it becomes relevant (add href): */}
         {/* <a className="social-button-discord" href="" target="_blank">
             <img
-            src={./discord-white.png"}
+            src={"/website-graphics/discord-white.png"}
             alt={"Discord Logo"}
             className="social-logo"
             />
@@ -51,7 +51,7 @@ function SocialButtons() {
         target="_blank"
       >
         <img
-          src={"/meetup-white.png"}
+          src={"/website-graphics/meetup-white.png"}
           alt={"Meetup Logo"}
           className="social-logo"
         />
@@ -107,7 +107,7 @@ function DiscordInvite() {
           rel="noreferrer"
         >
           <img
-            src="/discord-white.png"
+            src="/website-graphics/discord-white.png"
             alt=""
             aria-hidden="true"
             className="discord-cta-icon"

@@ -40,6 +40,12 @@ export function buildGalleryImagePaths(
   };
 }
 
+export interface GalleryEventLocationState {
+  fromChapter?: string;
+  fromScrollY?: number;
+  fromRoute?: string;
+}
+
 export function buildGalleryImagePathsForEvent(
   event: Pick<GalleryEventData, "assetBasePath">,
   image: Pick<GalleryImageData, "id">,

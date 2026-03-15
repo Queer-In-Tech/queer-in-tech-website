@@ -2,15 +2,15 @@ import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.scss";
 
-// Import page components
 import Home from "./pages/Home";
-import Donate from "./pages/Donate.tsx";
-import PostEventLinksManchester from "./pages/PostEventLinks/PostEventLinksManchester.tsx";
-import PostEventLinksLeeds from "./pages/PostEventLinks/PostEventLinksLeeds.tsx";
-import Contact from "./pages/Contact.tsx";
+import Donate from "./pages/Donate";
+import PostEventLinksManchester from "./pages/PostEventLinks/PostEventLinksManchester";
+import PostEventLinksLeeds from "./pages/PostEventLinks/PostEventLinksLeeds";
+import Contact from "./pages/Contact";
 import { ROUTES } from "./constants/routes";
-import GalleryOverview from "./pages/gallery/GalleryOverview.tsx";
-import { GalleryEvent } from "./pages/gallery/GalleryEvent.tsx";
+import GalleryOverview from "./pages/gallery/GalleryOverview";
+import { GalleryEvent } from "./pages/gallery/GalleryEvent";
+import { ASSETS } from "./constants/assets";
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -19,7 +19,6 @@ function App() {
     setIsNavOpen(!isNavOpen);
   };
 
-  // Close mobile menu when a link is clicked
   const closeMenu = () => {
     if (isNavOpen) {
       setIsNavOpen(false);
@@ -31,20 +30,23 @@ function App() {
       <nav className="navbar">
         <div className="navbar-container">
           <div className="navbar-logo">
-            <img className={"logo"} src={"/website-graphics/QIT-logo-1.jpg"} alt={"logo"} />
+            <img className="logo" src={ASSETS.logo} alt="Queer in Tech logo" />
             <Link to={ROUTES.home} onClick={closeMenu}>
               Queer in Tech
             </Link>
           </div>
 
-          <div
+          <button
+            type="button"
             className={`navbar-toggle ${isNavOpen ? "active" : ""}`}
             onClick={toggleNav}
+            aria-label="Toggle navigation menu"
+            aria-expanded={isNavOpen}
           >
             <span className="bar"></span>
             <span className="bar"></span>
             <span className="bar"></span>
-          </div>
+          </button>
 
           <ul className={`navbar-menu ${isNavOpen ? "active" : ""}`}>
             <li className="navbar-item">
@@ -57,7 +59,6 @@ function App() {
                 Gallery
               </Link>
             </li>
-            {/* New Contact link placed just before Donate */}
             <li className="navbar-item">
               <Link
                 className="navbar-link"
@@ -69,7 +70,7 @@ function App() {
             </li>
             <li className="navbar-item donate">
               <Link
-                className={"donate-text navbar-link"}
+                className="donate-text navbar-link"
                 onClick={closeMenu}
                 to={ROUTES.donate}
               >

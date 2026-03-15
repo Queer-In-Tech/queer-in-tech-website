@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://queerintech.org/sitemap.xml

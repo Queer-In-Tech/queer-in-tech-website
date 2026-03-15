@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { Helmet } from "react-helmet-async";
 import './Donate.scss';
 import { SOCIAL_LINKS } from "../constants/links";
+import { useDarkMode } from "../hooks/useDarkMode";
 
-const Donate: React.FC = () => {
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(
-        window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-    );
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const handleChange = (e: MediaQueryListEvent) => {
-            setIsDarkMode(e.matches);
-        };
-
-        mediaQuery.addEventListener('change', handleChange);
-        return () => mediaQuery.removeEventListener('change', handleChange);
-    }, []);
+const Donate = () => {
+    const isDarkMode = useDarkMode();
 
     return (
         <div className="donate-page">
+            <Helmet>
+                <title>Donate | Queer in Tech</title>
+                <meta name="description" content="Support Queer in Tech by donating. Your contribution helps organise events and provide safe spaces for LGBTQ+ people in tech." />
+            </Helmet>
             <h2>Donate</h2>
             <div>Any donation you make helps us continue to organise events and provide a safe space for queer people working in tech. You can donate directly to our bank account (we will receive 100% of your donation), or through stripe (we receive most of your donation)</div>
             <div className={"donation-container"}>
